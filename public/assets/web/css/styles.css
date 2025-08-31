@@ -1,0 +1,818 @@
+/*------------------------------------------------------------------
+[Master Stylesheet]
+Project: MyCarRental
+Version: 1.0
+Last change: 06/16/2025
+Primary use: Main stylesheet for web application UI
+-------------------------------------------------------------------*/
+
+/*------------------------------------------------------------------
+[Table of Contents]
+1. Reset Styles (Placeholder)
+2. Global Styles (Variables)
+3. Typography
+4. Custom Animations
+5. Custom Scrollbar
+6. Swiper Custom Styles
+7. Card Hover Effects
+8. Counter Animation
+9. Testimonial Card Styles
+10. Partner Logo Animation
+11. FAQ Accordion Styles
+12. Mobile Menu Animation
+13. Custom Button Styles
+14. Newsletter Input Focus
+15. Map Location Preview
+16. Award Badge Animation
+17. Blog Post Card Animation
+18. Car Category Card Animation
+19. Stats Counter Animation
+20. Download App Section Animation
+21. Quick Inquiry Form Animation
+22. Navigation Menu Hover Effect
+23. Floating Elements Animation
+24. Custom Radio Button Styles
+25. Progress Bar Animation
+26. Tooltip Styles
+27. Image Gallery Grid Animation
+28. Feature List Animation
+29. Price Toggle Switch
+30. Loading Spinner
+31. Scroll Progress Indicator
+32. Custom Select Styles
+33. Range Slider Styles
+34. Custom Checkbox Animation
+35. Form Validation Styles
+36. Mobile Submenu Styles
+37. Debugging Styles (Placeholder)
+-------------------------------------------------------------------*/
+
+/* [1. Reset Styles (Placeholder)] */
+/* Note: Consider importing reset.css or defining reset styles here for cross-browser consistency */
+/* @import "reset.css"; */
+/* Example reset: 
+body, h1, h2, h3, p, ul, li, form {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+*/
+
+/* [2. Global Styles (Variables)] */
+/* Defines CSS custom properties for consistent theming */
+:root {
+    /* Colors */
+    --primary: #4F46E5;
+    --primary-dark: #4338CA;
+    --secondary: #7C3AED;
+    --secondary-dark: #6D28D9;
+    --text-primary: #111827;
+    --text-secondary: #4B5563;
+    --bg-light: #F9FAFB;
+    --bg-dark: #111827;
+}
+
+/* [3. Typography] */
+/* Base typography settings for the document */
+body {
+    /* Typography */
+    font-family: 'Inter', sans-serif;
+}
+
+/* [4. Custom Animations] */
+/* Defines reusable animation keyframes for UI elements */
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+    100% { transform: translateY(0px); }
+}
+
+.animate-float {
+    /* Animation */
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.slide-up {
+    /* Animation */
+    animation: slideUp 0.5s ease-out forwards;
+}
+
+@keyframes floating {
+    0% { transform: translate(0, 0px); }
+    50% { transform: translate(0, 15px); }
+    100% { transform: translate(0, 0px); }
+}
+
+.floating {
+    /* Animation */
+    animation: floating 3s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.spinner {
+    /* Animation */
+    animation: spin 1s linear infinite;
+}
+
+/* [5. Custom Scrollbar] */
+/* Styles for WebKit-based browsers' scrollbars */
+::-webkit-scrollbar {
+    /* Dimensions */
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    /* Background */
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    /* Background */
+    background: #888;
+    /* Border */
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    /* Background */
+    background: #555;
+}
+
+/* [6. Swiper Custom Styles] */
+/* Customizes Swiper.js pagination and navigation */
+.swiper-pagination-bullet {
+    /* Dimensions */
+    width: 10px;
+    height: 10px;
+    /* Background */
+    background: rgba(0, 0, 0, 0.2);
+    /* Opacity */
+    opacity: 1;
+}
+
+.swiper-pagination-bullet-active {
+    /* Background */
+    background: var(--primary);
+    /* Transform */
+    transform: scale(1.2);
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+    /* Colors */
+    color: var(--primary);
+    background: white;
+    /* Dimensions */
+    width: 40px;
+    height: 40px;
+    /* Border */
+    border-radius: 50%;
+    /* Box Shadow */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.swiper-button-next:after,
+.swiper-button-prev:after {
+    /* Typography */
+    font-size: 20px;
+}
+
+/* [7. Card Hover Effects] */
+/* Hover effects for generic card components */
+.card-hover {
+    /* Transition */
+    transition: all 0.3s ease;
+}
+
+.card-hover:hover {
+    /* Transform */
+    transform: translateY(-5px);
+    /* Box Shadow */
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* [8. Counter Animation] */
+/* Animated counter using CSS custom properties */
+@property --num {
+    syntax: "<integer>";
+    initial-value: 0;
+    inherits: false;
+}
+
+.counter {
+    /* Animation */
+    animation: counter 2s forwards;
+    /* Counter */
+    counter-reset: num var(--num);
+}
+
+.counter::after {
+    /* Content */
+    content: counter(num);
+}
+
+@keyframes counter {
+    from { --num: 0; }
+    to { --num: attr(data-value); }
+}
+
+/* [9. Testimonial Card Styles] */
+/* Styles for testimonial card hover effects */
+.testimonial-card {
+    /* Transition */
+    transition: all 0.3s ease;
+}
+
+.testimonial-card:hover {
+    /* Transform */
+    transform: scale(1.02);
+}
+
+/* [10. Partner Logo Animation] */
+/* Hover effects for partner logos */
+.partner-logo {
+    /* Filter */
+    filter: grayscale(100%);
+    /* Opacity */
+    opacity: 0.6;
+    /* Transition */
+    transition: all 0.3s ease;
+}
+
+.partner-logo:hover {
+    /* Filter */
+    filter: grayscale(0%);
+    /* Opacity */
+    opacity: 1;
+}
+
+/* [11. FAQ Accordion Styles] */
+/* Styles for FAQ accordion functionality */
+.faq-item {
+    /* Transition */
+    transition: all 0.3s ease;
+}
+
+.faq-answer {
+    /* Dimensions */
+    max-height: 0;
+    /* Overflow */
+    overflow: hidden;
+    /* Transition */
+    transition: max-height 0.3s ease;
+}
+
+.faq-item.active .faq-answer {
+    /* Dimensions */
+    max-height: 200px;
+}
+
+/* [12. Mobile Menu Animation] */
+/* Animation for mobile menu toggle */
+.mobile-menu {
+    /* Transition */
+    transition: all 0.3s ease;
+}
+
+.mobile-menu.active {
+    /* Transform */
+    transform: translateX(0);
+}
+
+/* [13. Custom Button Styles] */
+/* Styles for primary buttons */
+.btn-primary {
+    /* Background */
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    /* Transition */
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    /* Transform */
+    transform: translateY(-2px);
+    /* Box Shadow */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+/* [14. Newsletter Input Focus] */
+/* Focus styles for newsletter input */
+.newsletter-input:focus {
+    /* Box Shadow */
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+}
+
+/* [15. Map Location Preview] */
+/* Hover effects for map preview */
+.map-preview {
+    /* Filter */
+    filter: grayscale(100%);
+    /* Transition */
+    transition: all 0.3s ease;
+}
+
+.map-preview:hover {
+    /* Filter */
+    filter: grayscale(0%);
+}
+
+/* [16. Award Badge Animation] */
+/* Hover effects for award badges */
+.award-badge {
+    /* Transition */
+    transition: all 0.3s ease;
+}
+
+.award-badge:hover {
+    /* Transform */
+    transform: rotate(5deg) scale(1.1);
+}
+
+/* [17. Blog Post Card Animation] */
+/* Hover effects for blog post cards */
+.blog-post {
+    /* Transition */
+    transition: all 0.3s ease;
+}
+
+.blog-post:hover {
+    /* Transform */
+    transform: translateY(-5px);
+}
+
+.blog-post:hover .blog-image {
+    /* Transform */
+    transform: scale(1.05);
+}
+
+.blog-image {
+    /* Transition */
+    transition: transform 0.3s ease;
+}
+
+/* [18. Car Category Card Animation] */
+.category-card {
+    /* Transition */
+    transition: all 0.3s ease;
+}
+
+.category-card:hover {
+    /* Transform */
+    transform: translateY(-5px) scale(1.02);
+}
+
+/* [19. Stats Counter Animation] */
+/* Hover effects for stats counter */
+.stat-counter {
+    /* Transition */
+    transition: all 0.3s ease;
+}
+
+.stat-counter:hover {
+    /* Transform */
+    transform: scale(1.1);
+    /* Colors */
+    color: var(--primary);
+}
+
+/* [20. Download App Section Animation] */
+.app-preview {
+    /* Transition */
+    transition: all 0.3s ease;
+}
+
+.app-preview:hover {
+    /* Transform */
+    transform: perspective(1000px) rotateY(-15deg);
+}
+
+/* [21. Quick Inquiry Form Animation] */
+/* Focus animations for inquiry form fields */
+.inquiry-form input:focus,
+.inquiry-form textarea:focus {
+    /* Transform */
+    transform: scale(1.02);
+}
+
+/* [22. Navigation Menu Hover Effect] */
+/* Hover effects for navigation links */
+.nav-link {
+    /* Position */
+    position: relative;
+}
+
+.nav-link::after {
+    /* Content */
+    content: '';
+    /* Position */
+    position: absolute;
+    /* Dimensions */
+    width: 0;
+    height: 2px;
+    /* Position */
+    bottom: -2px;
+    left: 0;
+    /* Background */
+    background-color: var(--primary);
+    /* Transition */
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+    /* Dimensions */
+    width: 100%;
+}
+
+/* [23. Custom Radio Button Styles] */
+/* Styles for custom radio buttons */
+.custom-radio {
+    /* Position */
+    position: relative;
+    /* Spacing */
+    padding-left: 30px;
+    /* Cursor */
+    cursor: pointer;
+}
+
+.custom-radio input {
+    /* Position */
+    position: absolute;
+    /* Opacity */
+    opacity: 0;
+}
+
+.radio-checkmark {
+    /* Position */
+    position: absolute;
+    /* Position */
+    top: 0;
+    left: 0;
+    /* Dimensions */
+    height: 20px;
+    width: 20px;
+    /* Background */
+    background-color: #fff;
+    /* Border */
+    border: 2px solid var(--primary);
+    /* Border */
+    border-radius: 50%;
+}
+
+.custom-radio input:checked ~ .radio-checkmark:after {
+    /* Content */
+    content: "";
+    /* Position */
+    position: absolute;
+    /* Position */
+    top: 50%;
+    left: 50%;
+    /* Transform */
+    transform: translate(-50%, -50%);
+    /* Dimensions */
+    width: 10px;
+    height: 10px;
+    /* Border */
+    border-radius: 50%;
+    /* Background */
+    background: var(--primary);
+}
+
+/* [24. Progress Bar Animation] */
+/* Styles for progress bar with animation */
+.progress-bar {
+    /* Position */
+    position: relative;
+    /* Dimensions */
+    height: 4px;
+    /* Background */
+    background-color: #e5e7eb;
+    /* Border */
+    border-radius: 2px;
+    /* Overflow */
+    overflow: hidden;
+}
+
+.progress-bar::after {
+    /* Content */
+    content: '';
+    /* Position */
+    position: absolute;
+    /* Position */
+    top: 0;
+    left: 0;
+    /* Dimensions */
+    height: 100%;
+%;
+    width: var(--progress, 0%);
+    /* Background */
+    background-color: var(--primary);
+    /* Transition */
+    transition: width 1s ease;
+}
+
+/* [25. Tooltip Styles] */
+/* Styles for tooltips on hover */
+.tooltip {
+    position: relative;
+}
+
+.tooltip:hover::before {
+    /* Content */
+    content: attr(data-tooltip);
+    /* Position */
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    /* Spacing */
+    padding: 5px 10px;
+    /* Background */
+    background: rgba(0, 0, 0, 0.8);
+    /* Colors */
+    color: white;
+    /* Typography */
+    font-size: 12px;
+    /* Border */
+    border-radius: 4px;
+    /* Text */
+    white-space: nowrap;
+}
+
+/* [26. Image Gallery Grid Animation] */
+/* Styles for gallery grid hover effects */
+.gallery-grid {
+    /* Display */
+    display: grid;
+    /* Spacing */
+    gap: 1rem;
+    /* Transition */
+    transition: all 0.3s ease;
+}
+
+.gallery-grid:hover > :not(:hover) {
+    /* Opacity */
+    opacity: 0.6;
+}
+
+/* [27. Feature List Animation] */
+/* Hover effects for feature list items */
+.feature-list li {
+    /* Transition */
+    transition: all  li;
+}
+
+.feature-list li:hover {
+    /* Transform */
+    transform: translateX(10px);
+    /* Color */
+    color: var(--primary);
+}
+
+/* [28. Price Toggle Switch] */
+/* Styles for toggle switch */
+.price-switch {
+    /* Position */
+    position: relative;
+    /* Dimensions */
+    width: 60px;
+    height: 30px;
+    /* Border */
+    border-radius: 15px;
+    /* Background */
+    background: var(--primary);
+    /* Cursor */
+    cursor: pointer;
+}
+
+.price-switch::after {
+    /* Content */
+    content: '';
+    /* Position */
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 26px;
+    /* Dimensions */
+    height: 26px;
+    /* Background */
+    background: white;
+    /* Border */
+    border-radius: 50%;
+    /* Transition */
+    transition: transform 0.3s ease;
+}
+
+.price-switch.active::after {
+    /* Transform */
+    transform: translateX(30px);
+}
+
+/* [29. Custom Select Styles] */
+/* Styles for custom select dropdown */
+.custom-select {
+    /* Position */
+    position: relative;
+    /* Display */
+    display: inline-block;
+}
+
+.custom-select select {
+    /* Appearance */
+    appearance: none;
+    /* Spacing */
+    padding-right: 30px;
+}
+
+.custom-select::after {
+    /* Content */
+    content: '▼';
+    /* Position */
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    /* Transform */
+    transform: translateY(-50%);
+    /* Pointer */
+    pointer-events: none;
+}
+
+/* [30. Range Slider Styles] */
+/* Styles for custom range slider */
+.range-slider {
+    /* Appearance */
+    -webkit-appearance: none;
+    /* Dimensions */
+    width: 100%;
+    height: 4px;
+    /* Background */
+    background: #e5e7eb;
+    /* Border */
+    border-radius: 2px;
+    /* Outline */
+    outline: none;
+}
+
+.range-slider::-webkit-slider-thumb {
+    /* Appearance */
+    -webkit-appearance: none;
+    /* Dimensions */
+    width: 20px;
+    height: 20px;
+    /* Background */
+    background: var(--primary);
+    /* Border */
+    border-radius: 50%;
+    /* Cursor */
+    cursor: pointer;
+    /* Transition */
+    transition: all 0.3s ease;
+}
+
+.range-slider::-webkit-slider-thumb:hover {
+    /* Transform */
+    transform: scale(1.2);
+}
+
+/* [31. Custom Checkbox Animation] */
+/* Styles for custom checkbox with animation */
+.custom-checkbox {
+    /* Position */
+    position: relative;
+    /* Spacing */
+    padding-left: 30px;
+    /* Cursor */
+    cursor: pointer;
+}
+
+.custom-checkbox input {
+    /* Position */
+    position: absolute;
+    /* Opacity */
+    opacity: 0;
+}
+
+.checkbox-checkmark {
+    /* Position */
+    position: absolute;
+    top: 0;
+    left: 0;
+    /* Dimensions */
+    height: 20px;
+    width: 20px;
+    /* Background */
+    background-color: #fff;
+    /* Border */
+    border: 2px solid var(--primary);
+    /* Border */
+    border-radius: 4px;
+    /* Transition */
+    transition: all 0.3s ease;
+}
+
+.custom-checkbox input:checked ~ .checkbox-checkmark {
+    /* Background */
+    background-color: var(--primary);
+}
+
+.checkbox-checkmark:after {
+    /* Content */
+    content: "";
+    /* Position */
+    position: absolute;
+    /* Display */
+    display: none;
+    left: 6px;
+    top: 2px;
+    /* Dimensions */
+    width: 5px;
+    height: 10px;
+    /* Border */
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    /* Transform */
+    transform: rotate(45deg);
+}
+
+.custom-checkbox input:checked ~ .checkbox-checkmark:after {
+    /* Display */
+    display: block;
+}
+
+/* [32. Form Validation Styles] */
+/* Styles for form validation feedback */
+.error-input input {
+    /* Border */
+    border-color: #ef4444;
+}
+
+.error-message {
+    /* Colors */
+    color: #ef4444;
+    /* Typography */
+    font-size: 0.875rem;
+    /* Spacing */
+    margin-top: 0.25rem;
+}
+
+.success-input input {
+    /* Border */
+    border-color: #10b981;
+}
+
+.success-message {
+    /* Colors */
+    color: #10b981;
+    /* Typography */
+    font-size: 0.875rem;
+    /* Spacing */
+    margin-top: 0.25rem;
+}
+
+/* [33. Mobile Submenu Styles] */
+/* Styles for mobile submenu toggle */
+.mobile-submenu {
+    /* Dimensions */
+    max-height: 0;
+    /* Overflow */
+    overflow: hidden;
+    /* Transition */
+    transition: max-height 0.3s ease-in-out;
+}
+
+.mobile-submenu.open {
+    /* Dimensions */
+    max-height: 500px;
+}
+
+.arrow-icon {
+    /* Transition */
+    transition: transform 0.3s ease-in-out;
+}
+
+.arrow-icon.rotated {
+    /* Transform */
+    transform: rotate(90deg);
+}
+
+.menu-item-button:hover {
+    /* Background */
+    background-color: #f9fafb;
+}
+
+/* [37. Debugging Styles (Placeholder)] */
+/* Note: Uncomment to enable debugging styles for layout troubleshooting */
+/* @import "debugging.css"; */
