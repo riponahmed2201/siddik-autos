@@ -1,5 +1,31 @@
 @extends('web.master')
 
+@section('title', 'Blog Details')
+
+@section('content')
+<section class="py-20 bg-white">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        @php($post = \App\Models\Blog::where('slug', request()->route('slug'))->firstOrFail())
+        @if($post->thumbnail_path)
+            <img src="{{ asset('storage/'.$post->thumbnail_path) }}" alt="{{ $post->title }}" class="w-full h-80 object-cover rounded-2xl mb-6">
+        @endif
+        <div class="mb-2 text-sm text-gray-500">{{ optional($post->published_at)->format('M d, Y') }}</div>
+        <h1 class="text-3xl font-bold text-gray-900 mb-4">{{ $post->title }}</h1>
+        @if($post->excerpt)
+            <p class="text-gray-600 mb-6">{{ $post->excerpt }}</p>
+        @endif
+        <div class="prose max-w-none">
+            {!! nl2br(e($post->content)) !!}
+        </div>
+        <div class="mt-8">
+            <a href="{{ url('blog') }}" class="text-indigo-600 hover:text-indigo-700">← Back to Blog</a>
+        </div>
+    </div>
+</section>
+@endsection
+
+@extends('web.master')
+
 @section('title', 'Contact Us')
 
 @section('content')

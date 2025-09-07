@@ -31,4 +31,9 @@ class HomeController extends Controller
     {
         return view('web.pages.blog-details');
     }
+
+    public function showPricing()
+    {
+        return view('web.pages.pricing');
+    }
 }

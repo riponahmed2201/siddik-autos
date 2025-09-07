@@ -4,6 +4,11 @@ use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\PasswordChangeController;
 use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\VehicleTypeController;
+use App\Http\Controllers\Admin\DestinationController;
+use App\Http\Controllers\Admin\PricingController;
+use App\Http\Controllers\Admin\BookingController as AdminBookingController;
+use App\Http\Controllers\Admin\BlogController;
 use Illuminate\Support\Facades\Route;
 
 //Login
@@ -24,6 +29,13 @@ Route::middleware('admin')->group(function () {
 
     //Dashboard
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    // Car Rental Management
+    Route::resource('vehicle-types', VehicleTypeController::class);
+    Route::resource('destinations', DestinationController::class);
+    Route::resource('pricing', PricingController::class);
+    Route::resource('bookings', AdminBookingController::class)->only(['index','show','edit','update','destroy']);
+    Route::resource('blogs', BlogController::class);
 
     // Route::resource('services', ServiceController::class);
     // Route::resource('blogs', BlogController::class);

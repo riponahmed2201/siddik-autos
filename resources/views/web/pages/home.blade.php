@@ -20,50 +20,82 @@
                 </p>
             </div>
 
-            <!-- Search Form -->
+            <!-- Booking Request Form -->
             <div class="bg-white rounded-2xl shadow-2xl p-6 md:p-8 max-w-4xl mx-auto transform translate-y-6">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Select a Car</label>
-                        <select
-                            class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
-                            <option>Select Car</option>
-                            <option>New York City</option>
-                            <option>Los Angeles</option>
-                            <option>Chicago</option>
-                            <option>Miami</option>
-                        </select>
+                @if(session('success'))
+                    <div class="mb-4 p-3 rounded bg-green-100 text-green-800">{{ session('success') }}</div>
+                @endif
+                @if($errors->any())
+                    <div class="mb-4 p-3 rounded bg-red-100 text-red-800">
+                        <ul class="list-disc ms-4">
+                            @foreach($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
                     </div>
+                @endif
+                <form method="POST" action="{{ route('booking.request') }}">
+                    @csrf
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Your Name <span class="text-red-500">*</span></label>
+                            <input name="name" value="{{ old('name') }}" type="text" placeholder="Full name" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Phone Number <span class="text-red-500">*</span></label>
+                            <input name="phone" value="{{ old('phone') }}" type="text" placeholder="Enter mobile number" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                            <input name="email" value="{{ old('email') }}" type="email" placeholder="Enter email" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                        </div>
 
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Phone Number <span
-                                class="text-red-500">*</span></label>
-                        <input type="text" placeholder="Enter mobile number"
-                            class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
-                    </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Vehicle Type</label>
+                            <select name="vehicle_type_id" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                                <option value="">Select Vehicle</option>
+                                @foreach(\App\Models\VehicleType::where('is_active', true)->get() as $vt)
+                                    <option value="{{ $vt->id }}" @selected(old('vehicle_type_id')==$vt->id)>{{ $vt->name }} ({{ $vt->capacity }})</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Destination</label>
+                            <select name="destination_id" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                                <option value="">Select Destination</option>
+                                @foreach(\App\Models\Destination::where('is_active', true)->get() as $dest)
+                                    <option value="{{ $dest->id }}" @selected(old('destination_id')==$dest->id)>{{ $dest->name }} {{ $dest->zone ? '(' . $dest->zone . ')' : '' }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">From Location <span class="text-red-500">*</span></label>
+                            <input name="from_location" value="{{ old('from_location', 'Dhaka Airport') }}" type="text" placeholder="Pickup location" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                        </div>
 
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Date Time</label>
-                        <input type="date"
-                            class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Journey Date</label>
+                            <input name="journey_date" value="{{ old('journey_date') }}" type="date" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Journey Time</label>
+                            <input name="journey_time" value="{{ old('journey_time') }}" type="time" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Passengers</label>
+                            <input name="passengers" value="{{ old('passengers', 1) }}" type="number" min="1" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                        </div>
+                        <div class="md:col-span-3">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Message</label>
+                            <textarea name="message" rows="3" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-indigo-500 focus:border-transparent">{{ old('message') }}</textarea>
+                        </div>
                     </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Pick-up</label>
-                        <input type="text" placeholder="Enter pick-up area"
-                            class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                    <div class="mt-6 text-center">
+                        <button class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-3 rounded-lg font-medium hover:from-indigo-700 hover:to-purple-700 transition shadow-md">
+                            Request Booking
+                        </button>
                     </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Destination</label>
-                        <input type="text" placeholder="Enter destination area"
-                            class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
-                    </div>
-                </div>
-                <div class="mt-6 text-center">
-                    <button
-                        class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-3 rounded-lg font-medium hover:from-indigo-700 hover:to-purple-700 transition shadow-md">
-                        Request Booking
-                    </button>
-                </div>
+                </form>
             </div>
         </div>
     </section>
@@ -729,52 +761,33 @@
                 </p>
             </div>
 
+            @php($latest = \App\Models\Blog::where('is_published', true)->latest('published_at')->take(3)->get())
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Blog Post 1 -->
-                <article class="bg-gray-50 rounded-3xl overflow-hidden group">
-                    <div class="relative overflow-hidden">
-                        <img src="assets/web/imgs/car1.jpeg" alt="Blog Post"
-                            class="w-full h-48 object-cover transform group-hover:scale-110 transition duration-500">
-                    </div>
-                    <div class="p-6">
-                        <div class="text-sm text-gray-500 mb-2">March 15, 2025</div>
-                        <h3 class="text-xl font-bold text-gray-900 mb-3">Top 10 Luxury Cars for 2025</h3>
-                        <p class="text-gray-600 mb-4">Discover the most luxurious and powerful cars that define
-                            automotive excellence in 2025.</p>
-                        <a href="blog-detail-sidebar.html" class="text-black font-medium hover:underline">Read More
-                            →</a>
-                    </div>
-                </article>
-
-                <!-- Blog Post 2 -->
-                <article class="bg-gray-50 rounded-3xl overflow-hidden group">
-                    <div class="relative overflow-hidden">
-                        <img src="assets/web/imgs/car2.jpeg" alt="Blog Post"
-                            class="w-full h-48 object-cover transform group-hover:scale-110 transition duration-500">
-                    </div>
-                    <div class="p-6">
-                        <div class="text-sm text-gray-500 mb-2">March 10, 2025</div>
-                        <h3 class="text-xl font-bold text-gray-900 mb-3">Essential Road Trip Tips</h3>
-                        <p class="text-gray-600 mb-4">Planning a road trip? Here are essential tips to make your
-                            journey memorable and safe.</p>
-                        <a href="blog-detail.html" class="text-black font-medium hover:underline">Read More →</a>
-                    </div>
-                </article>
-
-                <!-- Blog Post 3 -->
-                <article class="bg-gray-50 rounded-3xl overflow-hidden group">
-                    <div class="relative overflow-hidden">
-                        <img src="assets/web/imgs/car3.jpeg" alt="Blog Post"
-                            class="w-full h-48 object-cover transform group-hover:scale-110 transition duration-500">
-                    </div>
-                    <div class="p-6">
-                        <div class="text-sm text-gray-500 mb-2">March 5, 2025</div>
-                        <h3 class="text-xl font-bold text-gray-900 mb-3">The Rise of Electric Vehicles</h3>
-                        <p class="text-gray-600 mb-4">Explore how electric vehicles are transforming the future of
-                            transportation.</p>
-                        <a href="blog-detail.html" class="text-black font-medium hover:underline">Read More →</a>
-                    </div>
-                </article>
+                @forelse($latest as $post)
+                    <article class="bg-white rounded-3xl shadow overflow-hidden group">
+                        @if($post->thumbnail_path)
+                            <div class="relative overflow-hidden">
+                                <img src="{{ asset('storage/'.$post->thumbnail_path) }}" alt="{{ $post->title }}"
+                                     class="w-full h-48 object-cover transform group-hover:scale-110 transition duration-500">
+                            </div>
+                        @endif
+                        <div class="p-6">
+                            <div class="text-sm text-gray-500 mb-2">{{ optional($post->published_at)->format('M d, Y') }}</div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-3">
+                                <a href="{{ url('blog/details/'.$post->slug) }}" class="hover:text-indigo-600 transition">{{ $post->title }}</a>
+                            </h3>
+                            @if($post->excerpt)
+                                <p class="text-gray-600 mb-4">{{ $post->excerpt }}</p>
+                            @endif
+                            <a href="{{ url('blog/details/'.$post->slug) }}" class="text-indigo-600 font-medium hover:text-indigo-700">Read More →</a>
+                        </div>
+                    </article>
+                @empty
+                    <p class="text-gray-600">No posts yet. Please check back later.</p>
+                @endforelse
+            </div>
+            <div class="mt-10 text-center">
+                <a href="{{ url('blog') }}" class="inline-block px-6 py-3 rounded-lg bg-indigo-600 text-white font-medium hover:bg-indigo-700 transition">View All Posts</a>
             </div>
         </div>
     </section>

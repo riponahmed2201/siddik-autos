@@ -23,36 +23,61 @@
                 <div class="col-lg-12">
                     <div class="row">
 
-                        <!-- Sales Card -->
+                        <!-- Vehicle Types Card -->
                         <div class="col-xxl-4 col-md-6">
                             <div class="card info-card sales-card">
 
                                 <div class="card-body">
-                                    <h5 class="card-title">Sales <span>| Today</span></h5>
+                                    <h5 class="card-title">Vehicle Types <span>| Total</span></h5>
 
                                     <div class="d-flex align-items-center">
                                         <div
                                             class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                            <i class="bi bi-cart"></i>
+                                            <i class="bi bi-car-front"></i>
                                         </div>
                                         <div class="ps-3">
-                                            <h6>145</h6>
-                                            <span class="text-success small pt-1 fw-bold">12%</span> <span
-                                                class="text-muted small pt-2 ps-1">increase</span>
+                                            <h6>{{ \App\Models\VehicleType::count() }}</h6>
+                                            <span class="text-success small pt-1 fw-bold">{{ \App\Models\VehicleType::where('is_active', true)->count() }}</span> <span
+                                                class="text-muted small pt-2 ps-1">active</span>
 
                                         </div>
                                     </div>
                                 </div>
 
                             </div>
-                        </div><!-- End Sales Card -->
+                        </div><!-- End Vehicle Types Card -->
 
-                        <!-- Revenue Card -->
+                        <!-- Destinations Card -->
                         <div class="col-xxl-4 col-md-6">
                             <div class="card info-card revenue-card">
 
                                 <div class="card-body">
-                                    <h5 class="card-title">Revenue <span>| This Month</span></h5>
+                                    <h5 class="card-title">Destinations <span>| Total</span></h5>
+
+                                    <div class="d-flex align-items-center">
+                                        <div
+                                            class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                            <i class="bi bi-geo-alt"></i>
+                                        </div>
+                                        <div class="ps-3">
+                                            <h6>{{ \App\Models\Destination::count() }}</h6>
+                                            <span class="text-success small pt-1 fw-bold">{{ \App\Models\Destination::where('is_active', true)->count() }}</span> <span
+                                                class="text-muted small pt-2 ps-1">active</span>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div><!-- End Destinations Card -->
+
+                        <!-- Pricing Card -->
+                        <div class="col-xxl-4 col-xl-12">
+
+                            <div class="card info-card customers-card">
+
+                                <div class="card-body">
+                                    <h5 class="card-title">Pricing Records <span>| Total</span></h5>
 
                                     <div class="d-flex align-items-center">
                                         <div
@@ -60,34 +85,9 @@
                                             <i class="bi bi-currency-dollar"></i>
                                         </div>
                                         <div class="ps-3">
-                                            <h6>$3,264</h6>
-                                            <span class="text-success small pt-1 fw-bold">8%</span> <span
-                                                class="text-muted small pt-2 ps-1">increase</span>
-
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div><!-- End Revenue Card -->
-
-                        <!-- Customers Card -->
-                        <div class="col-xxl-4 col-xl-12">
-
-                            <div class="card info-card customers-card">
-
-                                <div class="card-body">
-                                    <h5 class="card-title">Customers <span>| This Year</span></h5>
-
-                                    <div class="d-flex align-items-center">
-                                        <div
-                                            class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                            <i class="bi bi-people"></i>
-                                        </div>
-                                        <div class="ps-3">
-                                            <h6>1244</h6>
-                                            <span class="text-danger small pt-1 fw-bold">12%</span> <span
-                                                class="text-muted small pt-2 ps-1">decrease</span>
+                                            <h6>{{ \App\Models\Pricing::count() }}</h6>
+                                            <span class="text-success small pt-1 fw-bold">{{ \App\Models\Pricing::where('is_active', true)->count() }}</span> <span
+                                                class="text-muted small pt-2 ps-1">active</span>
 
                                         </div>
                                     </div>
@@ -96,7 +96,7 @@
                             </div>
 
                         </div>
-                        <!-- End Customers Card -->
+                        <!-- End Pricing Card -->
                     </div>
                 </div>
 
