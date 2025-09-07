@@ -38,6 +38,7 @@
                                 <thead>
                                     <tr>
                                         <th>ID</th>
+                                        <th>Image</th>
                                         <th>Name</th>
                                         <th>Capacity</th>
                                         <th>Description</th>
@@ -49,6 +50,19 @@
                                     @forelse($vehicleTypes as $vehicleType)
                                         <tr>
                                             <td>{{ $vehicleType->id }}</td>
+                                            <td>
+                                                @if($vehicleType->image_path)
+                                                    <img src="{{ asset('storage/' . $vehicleType->image_path) }}"
+                                                         alt="{{ $vehicleType->name }}"
+                                                         class="img-thumbnail"
+                                                         style="width: 60px; height: 60px; object-fit: cover;">
+                                                @else
+                                                    <div class="bg-light d-flex align-items-center justify-content-center"
+                                                         style="width: 60px; height: 60px; border: 1px solid #dee2e6;">
+                                                        <i class="bi bi-image text-muted"></i>
+                                                    </div>
+                                                @endif
+                                            </td>
                                             <td>{{ $vehicleType->name }}</td>
                                             <td>{{ $vehicleType->capacity }}</td>
                                             <td>{{ Str::limit($vehicleType->description, 50) }}</td>
@@ -77,7 +91,7 @@
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="6" class="text-center">No vehicle types found.</td>
+                                            <td colspan="7" class="text-center">No vehicle types found.</td>
                                         </tr>
                                     @endforelse
                                 </tbody>

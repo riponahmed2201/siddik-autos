@@ -12,7 +12,8 @@ class VehicleType extends Model
         'slug',
         'description',
         'capacity',
-        'is_active'
+        'is_active',
+        'image_path'
     ];
 
     protected $casts = [
