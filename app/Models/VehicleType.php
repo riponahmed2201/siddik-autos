@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class VehicleType extends Model
 {
@@ -13,7 +15,8 @@ class VehicleType extends Model
         'description',
         'capacity',
         'is_active',
-        'image_path'
+        'image_path',
+        'category_id'
     ];
 
     protected $casts = [
@@ -23,5 +26,15 @@ class VehicleType extends Model
     public function pricing(): HasMany
     {
         return $this->hasMany(Pricing::class);
+    }
+
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(VehicleCategory::class);
+    }
+
+    public function features(): BelongsToMany
+    {
+        return $this->belongsToMany(VehicleFeature::class, 'vehicle_type_features');
     }
 }

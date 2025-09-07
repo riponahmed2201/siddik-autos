@@ -40,8 +40,9 @@
                                         <th>ID</th>
                                         <th>Image</th>
                                         <th>Name</th>
+                                        <th>Category</th>
                                         <th>Capacity</th>
-                                        <th>Description</th>
+                                        <th>Features</th>
                                         <th>Status</th>
                                         <th>Actions</th>
                                     </tr>
@@ -64,8 +65,28 @@
                                                 @endif
                                             </td>
                                             <td>{{ $vehicleType->name }}</td>
+                                            <td>
+                                                @if($vehicleType->category)
+                                                    <span class="badge bg-info">
+                                                        {{ $vehicleType->category->icon }} {{ $vehicleType->category->name }}
+                                                    </span>
+                                                @else
+                                                    <span class="text-muted">No Category</span>
+                                                @endif
+                                            </td>
                                             <td>{{ $vehicleType->capacity }}</td>
-                                            <td>{{ Str::limit($vehicleType->description, 50) }}</td>
+                                            <td>
+                                                @if($vehicleType->features->count() > 0)
+                                                    @foreach($vehicleType->features->take(3) as $feature)
+                                                        <span class="badge bg-secondary me-1">{{ $feature->icon }} {{ $feature->name }}</span>
+                                                    @endforeach
+                                                    @if($vehicleType->features->count() > 3)
+                                                        <span class="text-muted">+{{ $vehicleType->features->count() - 3 }} more</span>
+                                                    @endif
+                                                @else
+                                                    <span class="text-muted">No Features</span>
+                                                @endif
+                                            </td>
                                             <td>
                                                 <span class="badge {{ $vehicleType->is_active ? 'bg-success' : 'bg-danger' }}">
                                                     {{ $vehicleType->is_active ? 'Active' : 'Inactive' }}
@@ -91,7 +112,7 @@
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="7" class="text-center">No vehicle types found.</td>
+                                            <td colspan="8" class="text-center">No vehicle types found.</td>
                                         </tr>
                                     @endforelse
                                 </tbody>

@@ -111,270 +111,85 @@
                 </p>
             </div>
 
-            <!-- Car Categories -->
+            <!-- Vehicle Categories -->
             <div class="flex flex-wrap justify-center gap-4 mb-12">
                 <button onclick="filterCars('all')" data-category="all"
                     class="filter-btn bg-indigo-600 text-white px-6 py-2 rounded-full font-medium transition">
-                    All Cars
+                    All Vehicles
                 </button>
-                <button onclick="filterCars('luxury')" data-category="luxury"
-                    class="filter-btn bg-gray-100 text-gray-700 px-6 py-2 rounded-full font-medium hover:bg-gray-200 transition">
-                    Luxury
-                </button>
-                <button onclick="filterCars('suv')" data-category="suv"
-                    class="filter-btn bg-gray-100 text-gray-700 px-6 py-2 rounded-full font-medium hover:bg-gray-200 transition">
-                    SUV
-                </button>
-                <button onclick="filterCars('sports')" data-category="sports"
-                    class="filter-btn bg-gray-100 text-gray-700 px-6 py-2 rounded-full font-medium hover:bg-gray-200 transition">
-                    Sports
-                </button>
-                <button onclick="filterCars('electric')" data-category="electric"
-                    class="filter-btn bg-gray-100 text-gray-700 px-6 py-2 rounded-full font-medium hover:bg-gray-200 transition">
-                    Electric
-                </button>
+                @foreach($categories as $category)
+                    <button onclick="filterCars('{{ $category->slug }}')" data-category="{{ $category->slug }}"
+                        class="filter-btn bg-gray-100 text-gray-700 px-6 py-2 rounded-full font-medium hover:bg-gray-200 transition">
+                        {{ $category->icon }} {{ $category->name }}
+                    </button>
+                @endforeach
             </div>
 
-            <!-- Cars Grid -->
+            <!-- Vehicles Grid -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Car Card 1 -->
-                <div class="bg-white rounded-2xl shadow-md overflow-hidden group hover:shadow-xl transition duration-300 car-card"
-                    data-category="luxury">
-                    <div class="relative">
-                        <img src="assets/web/imgs/car1.jpeg" alt="Mercedes S-Class"
-                            class="w-full h-48 object-cover group-hover:scale-105 transition duration-500">
-                        <div
-                            class="absolute top-4 right-4 bg-indigo-600 text-white text-sm font-medium px-3 py-1 rounded-full">
-                            Available Now
+                @forelse($vehicleTypes as $vehicleType)
+                    <div class="bg-white rounded-2xl shadow-md overflow-hidden group hover:shadow-xl transition duration-300 car-card"
+                        data-category="{{ $vehicleType->category ? $vehicleType->category->slug : 'other' }}">
+                        <div class="relative">
+                            @if($vehicleType->image_path)
+                                <img src="{{ asset('storage/' . $vehicleType->image_path) }}"
+                                     alt="{{ $vehicleType->name }}"
+                                     class="w-full h-48 object-cover group-hover:scale-105 transition duration-500">
+                            @else
+                                <div class="w-full h-48 bg-gradient-to-br from-indigo-100 to-purple-100 flex items-center justify-center">
+                                    <div class="text-center">
+                                        <div class="text-4xl text-indigo-400 mb-2">🚗</div>
+                                        <div class="text-indigo-600 font-medium">{{ $vehicleType->name }}</div>
+                                    </div>
+                                </div>
+                            @endif
+                            <div class="absolute top-4 right-4 bg-indigo-600 text-white text-sm font-medium px-3 py-1 rounded-full">
+                                Available Now
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 class="text-xl font-bold text-gray-900">{{ $vehicleType->name }}</h3>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4 mb-6">
+                                <div class="flex items-center text-gray-600">
+                                    <span class="text-indigo-600 mr-2">👥</span>
+                                    {{ $vehicleType->capacity }} Seats
+                                </div>
+                                @if($vehicleType->features->count() > 0)
+                                    @foreach($vehicleType->features->take(3) as $feature)
+                                        <div class="flex items-center text-gray-600">
+                                            <span class="text-indigo-600 mr-2">{{ $feature->icon }}</span>
+                                            {{ $feature->name }}
+                                        </div>
+                                    @endforeach
+                                @else
+                                    <div class="flex items-center text-gray-600">
+                                        <span class="text-indigo-600 mr-2">✓</span>
+                                        Premium Features
+                                    </div>
+                                    <div class="flex items-center text-gray-600">
+                                        <span class="text-indigo-600 mr-2">✓</span>
+                                        Comfort
+                                    </div>
+                                @endif
+                            </div>
+                            @if($vehicleType->description)
+                                <p class="text-gray-600 text-sm mb-4">{{ Str::limit($vehicleType->description, 80) }}</p>
+                            @endif
+                            <a href="#fleet"
+                               onclick="document.querySelector('select[name=\"vehicle_type_id\"]').value = '{{ $vehicleType->id }}'; document.querySelector('select[name=\"vehicle_type_id\"]').scrollIntoView({behavior: 'smooth'});"
+                               class="block w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-center px-4 py-3 rounded-lg font-medium hover:from-indigo-700 hover:to-purple-700 transition">
+                                Book Now
+                            </a>
                         </div>
                     </div>
-                    <div class="p-6">
-                        <div class="flex justify-between items-center mb-4">
-                            <h3 class="text-xl font-bold text-gray-900">Mercedes S-Class</h3>
-                        </div>
-                        <div class="grid grid-cols-2 gap-4 mb-6">
-                            <div class="flex items-center text-gray-600">
-                                <span class="text-indigo-600 mr-2">✓</span>
-                                Automatic
-                            </div>
-                            <div class="flex items-center text-gray-600">
-                                <span class="text-indigo-600 mr-2">✓</span>
-                                4 Seats
-                            </div>
-                            <div class="flex items-center text-gray-600">
-                                <span class="text-indigo-600 mr-2">✓</span>
-                                GPS
-                            </div>
-                            <div class="flex items-center text-gray-600">
-                                <span class="text-indigo-600 mr-2">✓</span>
-                                Bluetooth
-                            </div>
-                        </div>
-                        <a href="car-details.html"
-                            class="block w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-center px-4 py-3 rounded-lg font-medium hover:from-indigo-700 hover:to-purple-700 transition">
-                            Book Now
-                        </a>
+                @empty
+                    <div class="col-span-full text-center py-12">
+                        <div class="text-gray-500 text-lg">No vehicles available at the moment.</div>
+                        <p class="text-gray-400 mt-2">Please check back later for our latest fleet.</p>
                     </div>
-                </div>
-
-                <!-- Car Card 2 -->
-                <div class="bg-white rounded-2xl shadow-md overflow-hidden group hover:shadow-xl transition duration-300 car-card"
-                    data-category="suv">
-                    <div class="relative">
-                        <img src="assets/web/imgs/car2.jpeg" alt="Range Rover Sport"
-                            class="w-full h-48 object-cover group-hover:scale-105 transition duration-500">
-                        <div
-                            class="absolute top-4 right-4 bg-indigo-600 text-white text-sm font-medium px-3 py-1 rounded-full">
-                            Available Now
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <div class="flex justify-between items-center mb-4">
-                            <h3 class="text-xl font-bold text-gray-900">Range Rover Sport</h3>
-                        </div>
-                        <div class="grid grid-cols-2 gap-4 mb-6">
-                            <div class="flex items-center text-gray-600">
-                                <span class="text-indigo-600 mr-2">✓</span>
-                                Automatic
-                            </div>
-                            <div class="flex items-center text-gray-600">
-                                <span class="text-indigo-600 mr-2">✓</span>
-                                5 Seats
-                            </div>
-                            <div class="flex items-center text-gray-600">
-                                <span class="text-indigo-600 mr-2">✓</span>
-                                GPS
-                            </div>
-                            <div class="flex items-center text-gray-600">
-                                <span class="text-indigo-600 mr-2">✓</span>
-                                Bluetooth
-                            </div>
-                        </div>
-                        <a href="car-details.html"
-                            class="block w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-center px-4 py-3 rounded-lg font-medium hover:from-indigo-700 hover:to-purple-700 transition">
-                            Book Now
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Car Card 3 -->
-                <div class="bg-white rounded-2xl shadow-md overflow-hidden group hover:shadow-xl transition duration-300 car-card"
-                    data-category="sports">
-                    <div class="relative">
-                        <img src="assets/web/imgs/car3.jpeg" alt="Porsche 911"
-                            class="w-full h-48 object-cover group-hover:scale-105 transition duration-500">
-                        <div
-                            class="absolute top-4 right-4 bg-red-600 text-white text-sm font-medium px-3 py-1 rounded-full">
-                            Limited
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <div class="flex justify-between items-center mb-4">
-                            <h3 class="text-xl font-bold text-gray-900">Porsche 911</h3>
-                        </div>
-                        <div class="grid grid-cols-2 gap-4 mb-6">
-                            <div class="flex items-center text-gray-600">
-                                <span class="text-indigo-600 mr-2">✓</span>
-                                Manual
-                            </div>
-                            <div class="flex items-center text-gray-600">
-                                <span class="text-indigo-600 mr-2">✓</span>
-                                2 Seats
-                            </div>
-                            <div class="flex items-center text-gray-600">
-                                <span class="text-indigo-600 mr-2">✓</span>
-                                GPS
-                            </div>
-                            <div class="flex items-center text-gray-600">
-                                <span class="text-indigo-600 mr-2">✓</span>
-                                Bluetooth
-                            </div>
-                        </div>
-                        <a href="car-details.html"
-                            class="block w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-center px-4 py-3 rounded-lg font-medium hover:from-indigo-700 hover:to-purple-700 transition">
-                            Book Now
-                        </a>
-                    </div>
-                </div>
-                <!-- Car Card 1 -->
-                <div class="bg-white rounded-2xl shadow-md overflow-hidden group hover:shadow-xl transition duration-300 car-card"
-                    data-category="electric">
-                    <div class="relative">
-                        <img src="assets/web/imgs/car4.jpeg" alt="Mercedes S-Class"
-                            class="w-full h-48 object-cover group-hover:scale-105 transition duration-500">
-                        <div
-                            class="absolute top-4 right-4 bg-indigo-600 text-white text-sm font-medium px-3 py-1 rounded-full">
-                            Available Now
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <div class="flex justify-between items-center mb-4">
-                            <h3 class="text-xl font-bold text-gray-900">Mercedes S-Class</h3>
-                        </div>
-                        <div class="grid grid-cols-2 gap-4 mb-6">
-                            <div class="flex items-center text-gray-600">
-                                <span class="text-indigo-600 mr-2">✓</span>
-                                Automatic
-                            </div>
-                            <div class="flex items-center text-gray-600">
-                                <span class="text-indigo-600 mr-2">✓</span>
-                                4 Seats
-                            </div>
-                            <div class="flex items-center text-gray-600">
-                                <span class="text-indigo-600 mr-2">✓</span>
-                                GPS
-                            </div>
-                            <div class="flex items-center text-gray-600">
-                                <span class="text-indigo-600 mr-2">✓</span>
-                                Bluetooth
-                            </div>
-                        </div>
-                        <a href="car-details.html"
-                            class="block w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-center px-4 py-3 rounded-lg font-medium hover:from-indigo-700 hover:to-purple-700 transition">
-                            Book Now
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Car Card 2 -->
-                <div class="bg-white rounded-2xl shadow-md overflow-hidden group hover:shadow-xl transition duration-300 car-card"
-                    data-category="luxury">
-                    <div class="relative">
-                        <img src="assets/web/imgs/car5.webp" alt="Range Rover Sport"
-                            class="w-full h-48 object-cover group-hover:scale-105 transition duration-500">
-                        <div
-                            class="absolute top-4 right-4 bg-indigo-600 text-white text-sm font-medium px-3 py-1 rounded-full">
-                            Available Now
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <div class="flex justify-between items-center mb-4">
-                            <h3 class="text-xl font-bold text-gray-900">Range Rover Sport</h3>
-                        </div>
-                        <div class="grid grid-cols-2 gap-4 mb-6">
-                            <div class="flex items-center text-gray-600">
-                                <span class="text-indigo-600 mr-2">✓</span>
-                                Automatic
-                            </div>
-                            <div class="flex items-center text-gray-600">
-                                <span class="text-indigo-600 mr-2">✓</span>
-                                5 Seats
-                            </div>
-                            <div class="flex items-center text-gray-600">
-                                <span class="text-indigo-600 mr-2">✓</span>
-                                GPS
-                            </div>
-                            <div class="flex items-center text-gray-600">
-                                <span class="text-indigo-600 mr-2">✓</span>
-                                Bluetooth
-                            </div>
-                        </div>
-                        <a href="car-details.html"
-                            class="block w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-center px-4 py-3 rounded-lg font-medium hover:from-indigo-700 hover:to-purple-700 transition">
-                            Book Now
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Car Card 3 -->
-                <div class="bg-white rounded-2xl shadow-md overflow-hidden group hover:shadow-xl transition duration-300 car-card"
-                    data-category="suv">
-                    <div class="relative">
-                        <img src="assets/web/imgs/car6.jpg" alt="Porsche 911"
-                            class="w-full h-48 object-cover group-hover:scale-105 transition duration-500">
-                        <div
-                            class="absolute top-4 right-4 bg-red-600 text-white text-sm font-medium px-3 py-1 rounded-full">
-                            Limited
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <div class="flex justify-between items-center mb-4">
-                            <h3 class="text-xl font-bold text-gray-900">Porsche 911</h3>
-                        </div>
-                        <div class="grid grid-cols-2 gap-4 mb-6">
-                            <div class="flex items-center text-gray-600">
-                                <span class="text-indigo-600 mr-2">✓</span>
-                                Manual
-                            </div>
-                            <div class="flex items-center text-gray-600">
-                                <span class="text-indigo-600 mr-2">✓</span>
-                                2 Seats
-                            </div>
-                            <div class="flex items-center text-gray-600">
-                                <span class="text-indigo-600 mr-2">✓</span>
-                                GPS
-                            </div>
-                            <div class="flex items-center text-gray-600">
-                                <span class="text-indigo-600 mr-2">✓</span>
-                                Bluetooth
-                            </div>
-                        </div>
-                        <a href="car-details.html"
-                            class="block w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-center px-4 py-3 rounded-lg font-medium hover:from-indigo-700 hover:to-purple-700 transition">
-                            Book Now
-                        </a>
-                    </div>
-                </div>
+                @endforelse
             </div>
         </div>
     </section>
@@ -620,59 +435,54 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Testimonial 1 -->
-                <div class="bg-white rounded-2xl p-8 shadow-lg">
-                    <div class="flex items-center mb-6">
-                        <img src="assets/web/imgs/profile1.jpeg" alt="Customer"
-                            class="w-12 h-12 rounded-full object-cover mr-4">
-                        <div>
-                            <h3 class="text-lg font-bold text-gray-900">Michael Brown</h3>
-                            <div class="flex text-yellow-400">
-                                ★★★★★
+                @forelse($testimonials as $testimonial)
+                    <div class="bg-white rounded-2xl p-8 shadow-lg">
+                        <div class="flex items-center mb-6">
+                            @if($testimonial->customer_image)
+                                <img src="{{ asset('storage/' . $testimonial->customer_image) }}"
+                                     alt="{{ $testimonial->customer_name }}"
+                                     class="w-12 h-12 rounded-full object-cover mr-4">
+                            @else
+                                <div class="w-12 h-12 bg-indigo-100 rounded-full flex items-center justify-center mr-4">
+                                    <i class="bi bi-person text-indigo-600"></i>
+                                </div>
+                            @endif
+                            <div>
+                                <h3 class="text-lg font-bold text-gray-900">{{ $testimonial->customer_name }}</h3>
+                                @if($testimonial->customer_position || $testimonial->customer_company)
+                                    <p class="text-sm text-gray-500">
+                                        @if($testimonial->customer_position)
+                                            {{ $testimonial->customer_position }}
+                                        @endif
+                                        @if($testimonial->customer_position && $testimonial->customer_company)
+                                            at
+                                        @endif
+                                        @if($testimonial->customer_company)
+                                            {{ $testimonial->customer_company }}
+                                        @endif
+                                    </p>
+                                @endif
+                                <div class="flex text-yellow-400">
+                                    @for($i = 1; $i <= 5; $i++)
+                                        @if($i <= $testimonial->rating)
+                                            ★
+                                        @else
+                                            ☆
+                                        @endif
+                                    @endfor
+                                </div>
                             </div>
                         </div>
+                        <p class="text-gray-600">
+                            "{{ $testimonial->testimonial }}"
+                        </p>
                     </div>
-                    <p class="text-gray-600">
-                        "Outstanding service! The car was immaculate and the staff was incredibly professional. Will
-                        definitely rent from MyCarRental again."
-                    </p>
-                </div>
-
-                <!-- Testimonial 2 -->
-                <div class="bg-white rounded-2xl p-8 shadow-lg">
-                    <div class="flex items-center mb-6">
-                        <img src="assets/web/imgs/profile2.jpeg" alt="Customer"
-                            class="w-12 h-12 rounded-full object-cover mr-4">
-                        <div>
-                            <h3 class="text-lg font-bold text-gray-900">Sarah Wilson</h3>
-                            <div class="flex text-yellow-400">
-                                ★★★★★
-                            </div>
-                        </div>
+                @empty
+                    <div class="col-span-full text-center py-12">
+                        <div class="text-white text-lg">No testimonials available at the moment.</div>
+                        <p class="text-indigo-200 mt-2">Please check back later for customer reviews.</p>
                     </div>
-                    <p class="text-gray-600">
-                        "The booking process was seamless, and the car exceeded my expectations. Excellent value for a
-                        luxury rental experience."
-                    </p>
-                </div>
-
-                <!-- Testimonial 3 -->
-                <div class="bg-white rounded-2xl p-8 shadow-lg">
-                    <div class="flex items-center mb-6">
-                        <img src="assets/web/imgs/profile3.jpeg" alt="Customer"
-                            class="w-12 h-12 rounded-full object-cover mr-4">
-                        <div>
-                            <h3 class="text-lg font-bold text-gray-900">David Thompson</h3>
-                            <div class="flex text-yellow-400">
-                                ★★★★★
-                            </div>
-                        </div>
-                    </div>
-                    <p class="text-gray-600">
-                        "The attention to detail and customer service is unmatched. MyCarRental made my special occasion
-                        even more memorable."
-                    </p>
-                </div>
+                @endforelse
             </div>
         </div>
     </section>
@@ -791,4 +601,30 @@
             </div>
         </div>
     </section>
+@endsection
+
+@section('scripts')
+<script>
+    function filterCars(category) {
+        // Remove active class from all buttons
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.classList.remove('bg-indigo-600', 'text-white');
+            btn.classList.add('bg-gray-100', 'text-gray-700');
+        });
+
+        // Add active class to clicked button
+        event.target.classList.remove('bg-gray-100', 'text-gray-700');
+        event.target.classList.add('bg-indigo-600', 'text-white');
+
+        // Show/hide car cards based on category
+        const carCards = document.querySelectorAll('.car-card');
+        carCards.forEach(card => {
+            if (category === 'all' || card.dataset.category === category) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+</script>
 @endsection

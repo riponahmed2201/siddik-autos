@@ -56,6 +56,42 @@
                             </div>
 
                             <div class="row mb-3">
+                                <label for="category_id" class="col-sm-2 col-form-label">Category</label>
+                                <div class="col-sm-10">
+                                    <select class="form-select" id="category_id" name="category_id">
+                                        <option value="">Select Category</option>
+                                        @foreach($categories as $category)
+                                            <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                                                {{ $category->icon }} {{ $category->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <label for="features" class="col-sm-2 col-form-label">Features</label>
+                                <div class="col-sm-10">
+                                    <div class="row">
+                                        @foreach($features as $feature)
+                                            <div class="col-md-4 col-sm-6 mb-2">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox"
+                                                           id="feature_{{ $feature->id }}"
+                                                           name="features[]"
+                                                           value="{{ $feature->id }}"
+                                                           {{ in_array($feature->id, old('features', [])) ? 'checked' : '' }}>
+                                                    <label class="form-check-label" for="feature_{{ $feature->id }}">
+                                                        {{ $feature->icon }} {{ $feature->name }}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
                                 <label for="image" class="col-sm-2 col-form-label">Image</label>
                                 <div class="col-sm-10">
                                     <input type="file" class="form-control" id="image" name="image" accept="image/*">

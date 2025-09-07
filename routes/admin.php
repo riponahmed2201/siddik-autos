@@ -9,6 +9,9 @@ use App\Http\Controllers\Admin\DestinationController;
 use App\Http\Controllers\Admin\PricingController;
 use App\Http\Controllers\Admin\BookingController as AdminBookingController;
 use App\Http\Controllers\Admin\BlogController;
+use App\Http\Controllers\Admin\TestimonialController;
+use App\Http\Controllers\Admin\VehicleCategoryController;
+use App\Http\Controllers\Admin\VehicleFeatureController;
 use Illuminate\Support\Facades\Route;
 
 //Login
@@ -32,10 +35,13 @@ Route::middleware('admin')->group(function () {
 
     // Car Rental Management
     Route::resource('vehicle-types', VehicleTypeController::class);
+    Route::resource('vehicle-categories', VehicleCategoryController::class);
+    Route::resource('vehicle-features', VehicleFeatureController::class);
     Route::resource('destinations', DestinationController::class);
     Route::resource('pricing', PricingController::class);
     Route::resource('bookings', AdminBookingController::class)->only(['index','show','edit','update','destroy']);
     Route::resource('blogs', BlogController::class);
+    Route::resource('testimonials', TestimonialController::class);
 
     // Route::resource('services', ServiceController::class);
     // Route::resource('blogs', BlogController::class);

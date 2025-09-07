@@ -22,6 +22,16 @@
                     </a>
                 </li>
                 <li>
+                    <a href="{{ route('admin.vehicle-categories.index') }}">
+                        <i class="bi bi-circle"></i><span>Vehicle Categories</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('admin.vehicle-features.index') }}">
+                        <i class="bi bi-circle"></i><span>Vehicle Features</span>
+                    </a>
+                </li>
+                <li>
                     <a href="{{ route('admin.destinations.index') }}">
                         <i class="bi bi-circle"></i><span>Destinations</span>
                     </a>
@@ -34,6 +44,11 @@
                 <li>
                     <a href="{{ route('admin.blogs.index') }}">
                         <i class="bi bi-circle"></i><span>Blogs</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('admin.testimonials.index') }}">
+                        <i class="bi bi-circle"></i><span>Testimonials</span>
                     </a>
                 </li>
                 <li>
