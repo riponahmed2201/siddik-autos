@@ -37,8 +37,9 @@
                                         </div>
                                         <div class="ps-3">
                                             <h6>{{ \App\Models\VehicleType::count() }}</h6>
-                                            <span class="text-success small pt-1 fw-bold">{{ \App\Models\VehicleType::where('is_active', true)->count() }}</span> <span
-                                                class="text-muted small pt-2 ps-1">active</span>
+                                            <span
+                                                class="text-success small pt-1 fw-bold">{{ \App\Models\VehicleType::where('is_active', true)->count() }}</span>
+                                            <span class="text-muted small pt-2 ps-1">active</span>
 
                                         </div>
                                     </div>
@@ -61,8 +62,9 @@
                                         </div>
                                         <div class="ps-3">
                                             <h6>{{ \App\Models\Destination::count() }}</h6>
-                                            <span class="text-success small pt-1 fw-bold">{{ \App\Models\Destination::where('is_active', true)->count() }}</span> <span
-                                                class="text-muted small pt-2 ps-1">active</span>
+                                            <span
+                                                class="text-success small pt-1 fw-bold">{{ \App\Models\Destination::where('is_active', true)->count() }}</span>
+                                            <span class="text-muted small pt-2 ps-1">active</span>
 
                                         </div>
                                     </div>
@@ -86,8 +88,9 @@
                                         </div>
                                         <div class="ps-3">
                                             <h6>{{ \App\Models\Pricing::count() }}</h6>
-                                            <span class="text-success small pt-1 fw-bold">{{ \App\Models\Pricing::where('is_active', true)->count() }}</span> <span
-                                                class="text-muted small pt-2 ps-1">active</span>
+                                            <span
+                                                class="text-success small pt-1 fw-bold">{{ \App\Models\Pricing::where('is_active', true)->count() }}</span>
+                                            <span class="text-muted small pt-2 ps-1">active</span>
 
                                         </div>
                                     </div>
@@ -104,26 +107,68 @@
                     <div class="row">
                         <!-- Booking Request -->
                         <div class="col-12">
-                            <div class="card recent-sales overflow-auto">
-
-                                <div class="card-header">
-                                    <h5 class="card-title">Booking Request</h5>
-                                </div>
+                            <div class="card">
                                 <div class="card-body">
-                                    <table class="table table-bordered datatable">
-                                        <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>Name</th>
-                                                <th>Email</th>
-                                                <th>Phone</th>
-                                                <th>Status</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
+                                    <h5 class="card-title">Recent Booking Requests</h5>
 
-                                        </tbody>
-                                    </table>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped align-middle">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Name</th>
+                                                    <th>Phone</th>
+                                                    <th>Vehicle</th>
+                                                    <th>Destination</th>
+                                                    <th>Date</th>
+                                                    <th>Status</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @forelse($bookings as $booking)
+                                                    <tr>
+                                                        <td>{{ $booking->id }}</td>
+                                                        <td>{{ $booking->name }}</td>
+                                                        <td>{{ $booking->phone }}</td>
+                                                        <td>{{ optional($booking->vehicleType)->name ?? '-' }}</td>
+                                                        <td>{{ optional($booking->destination)->name ?? '-' }}</td>
+                                                        <td>{{ $booking->journey_date ? $booking->journey_date->format('M d, Y') : '-' }}
+                                                        </td>
+                                                        <td>
+                                                            <span
+                                                                @class([
+                                                                    'badge bg-warning' => $booking->status === 'pending',
+                                                                    'badge bg-success' => $booking->status === 'confirmed',
+                                                                    'badge bg-danger' => $booking->status === 'cancelled',
+                                                                ])>{{ ucfirst($booking->status) }}</span>
+                                                        </td>
+                                                        <td>
+                                                            <a href="{{ route('admin.bookings.show', $booking) }}"
+                                                                class="btn btn-sm btn-info"><i class="bi bi-eye"></i></a>
+                                                            <form action="{{ route('admin.bookings.destroy', $booking) }}"
+                                                                method="POST" class="d-inline"
+                                                                onsubmit="return confirm('Delete this booking?')">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="submit" class="btn btn-sm btn-danger"><i
+                                                                        class="bi bi-trash"></i></button>
+                                                            </form>
+                                                        </td>
+                                                    </tr>
+                                                @empty
+                                                    <tr>
+                                                        <td colspan="8" class="text-center">No booking requests found.
+                                                        </td>
+                                                    </tr>
+                                                @endforelse
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <div class="d-flex justify-content-center">
+                                        {{ $bookings->links('pagination::bootstrap-4') }}
+                                    </div>
                                 </div>
                             </div>
                         </div>
