@@ -21,7 +21,8 @@
             </div>
 
             <!-- Booking Request Form -->
-            <div class="bg-white rounded-2xl shadow-2xl p-6 md:p-8 max-w-4xl mx-auto transform translate-y-6">
+            <div id="bookingFormOriginalSlot">
+                <div id="bookingFormContainer" class="bg-white rounded-2xl shadow-2xl p-6 md:p-8 max-w-4xl mx-auto transform translate-y-6">
                 @if (session('success'))
                     <div class="mb-4 p-3 rounded bg-green-100 text-green-800">{{ session('success') }}</div>
                 @endif
@@ -34,7 +35,7 @@
                         </ul>
                     </div>
                 @endif
-                <form method="POST" action="{{ route('booking.request') }}">
+                <form id="bookingRequestForm" method="POST" action="{{ route('booking.request') }}">
                     @csrf
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <div>
@@ -114,6 +115,7 @@
                         </button>
                     </div>
                 </form>
+                </div>
             </div>
         </div>
     </section>
@@ -197,11 +199,10 @@
                             @if ($vehicleType->description)
                                 <p class="text-gray-600 text-sm mb-4">{{ Str::limit($vehicleType->description, 80) }}</p>
                             @endif
-                            <a href="#fleet"
-                                onclick="document.querySelector('select[name=\"vehicle_type_id\"]').value = '{{ $vehicleType->id }}'; document.querySelector('select[name=\"vehicle_type_id\"]').scrollIntoView({behavior: 'smooth'});"
-                                class="block w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-center px-4 py-3 rounded-lg font-medium hover:from-indigo-700 hover:to-purple-700 transition">
+                            <button type="button" data-vehicle-id="{{ $vehicleType->id }}" data-vehicle-name="{{ $vehicleType->name }}"
+                                class="book-now-btn block w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-center px-4 py-3 rounded-lg font-medium hover:from-indigo-700 hover:to-purple-700 transition">
                                 Book Now
-                            </a>
+                            </button>
                         </div>
                     </div>
                 @empty
@@ -213,6 +214,22 @@
             </div>
         </div>
     </section>
+
+    <!-- Booking Modal -->
+    <div id="bookingModal" class="fixed inset-0 z-50 hidden">
+        <div class="absolute inset-0 bg-black/50"></div>
+        <div class="relative flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white w-full max-w-4xl rounded-2xl shadow-xl overflow-hidden">
+                <div class="px-6 py-4 border-b flex items-center justify-between">
+                    <h3 class="text-lg font-semibold text-gray-900">Booking Request - <span id="modalVehicleName" class="font-medium text-indigo-600"></span></h3>
+                    <button type="button" class="modal-close text-gray-500 hover:text-gray-700">✕</button>
+                </div>
+                <div class="px-4 md:px-6 py-5" id="bookingFormHost">
+                    <!-- The booking form will be moved here dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Benefits Section -->
     <section class="py-20 bg-white">
@@ -404,8 +421,116 @@
     </section>
 @endsection
 
-@section('scripts')
+@push('scripts')
     <script>
+        // Toast helper
+        function showToast(message, type = 'success') {
+            const root = document.getElementById('toast-root');
+            if (!root) return;
+            const id = `t-${Date.now()}`;
+            const bg = type === 'error' ? 'bg-red-600' : 'bg-green-600';
+            const el = document.createElement('div');
+            el.id = id;
+            el.className = `${bg} text-white px-4 py-3 rounded-lg shadow-lg min-w-[260px]`;
+            el.textContent = message;
+            root.appendChild(el);
+            setTimeout(() => {
+                el.classList.add('opacity-0', 'transition');
+                setTimeout(() => el.remove(), 300);
+            }, 2500);
+        }
+        // Vanilla JS handlers (works even without jQuery)
+        document.addEventListener('click', function (e) {
+            const bookBtn = e.target.closest('.book-now-btn');
+            if (bookBtn) {
+                e.preventDefault();
+                const vehicleId = bookBtn.getAttribute('data-vehicle-id');
+                const vehicleName = bookBtn.getAttribute('data-vehicle-name');
+                const modal = document.getElementById('bookingModal');
+                modal.dataset.vehicleId = vehicleId || '';
+                document.getElementById('modalVehicleName').textContent = vehicleName || '';
+
+                // Move the form into the modal host
+                const host = document.getElementById('bookingFormHost');
+                const formContainer = document.getElementById('bookingFormContainer');
+                if (host && formContainer && !host.contains(formContainer)) {
+                    host.appendChild(formContainer);
+                }
+
+                modal.classList.remove('hidden');
+                return;
+            }
+
+            if (e.target.classList.contains('modal-close')) {
+                const modal = document.getElementById('bookingModal');
+                modal.classList.add('hidden');
+                // Move the form back to its original slot
+                const original = document.getElementById('bookingFormOriginalSlot');
+                const formContainer = document.getElementById('bookingFormContainer');
+                if (original && formContainer && !original.contains(formContainer)) {
+                    original.appendChild(formContainer);
+                }
+                return;
+            }
+        });
+
+        document.getElementById('bookingModal').addEventListener('click', function (e) {
+            if (e.target.id === 'bookingModal') {
+                e.currentTarget.classList.add('hidden');
+                // Return form to original slot
+                const original = document.getElementById('bookingFormOriginalSlot');
+                const formContainer = document.getElementById('bookingFormContainer');
+                if (original && formContainer && !original.contains(formContainer)) {
+                    original.appendChild(formContainer);
+                }
+            }
+        });
+
+        // AJAX submit for booking form
+        document.addEventListener('submit', function (e) {
+            const form = e.target.closest('#bookingRequestForm');
+            if (!form) return;
+            e.preventDefault();
+
+            const url = form.getAttribute('action');
+            const formData = new FormData(form);
+            // include JSON expectation
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': form.querySelector('input[name="_token"]').value
+                },
+                body: formData
+            }).then(async res => {
+                const data = await res.json().catch(() => ({}));
+                if (res.ok) {
+                    showToast(data.message || 'Booking submitted successfully.');
+                    // reset form, close modal, return form to original slot
+                    form.reset();
+                    const modal = document.getElementById('bookingModal');
+                    modal.classList.add('hidden');
+                    const original = document.getElementById('bookingFormOriginalSlot');
+                    const formContainer = document.getElementById('bookingFormContainer');
+                    if (original && formContainer && !original.contains(formContainer)) {
+                        original.appendChild(formContainer);
+                    }
+                } else {
+                    let msg = 'Submission failed.';
+                    if (data && data.errors) {
+                        msg = Object.values(data.errors).flat().join(' ');
+                    } else if (data && data.message) {
+                        msg = data.message;
+                    }
+                    showToast(msg, 'error');
+                }
+            }).catch(() => {
+                showToast('Network error. Please try again.', 'error');
+            });
+        });
+
+        // No marker needed now; the form returns to #bookingFormOriginalSlot
         function filterCars(category) {
             // Remove active class from all buttons
             document.querySelectorAll('.filter-btn').forEach(btn => {
@@ -428,4 +553,4 @@
             });
         }
     </script>
-@endsection
+@endpush

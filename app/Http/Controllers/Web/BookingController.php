@@ -26,7 +26,11 @@ class BookingController extends Controller
         ]);
 
         BookingRequest::create($validated + ['status' => 'pending']);
-
+        if ($request->expectsJson()) {
+            return response()->json([
+                'message' => 'Your booking request has been submitted. We will contact you shortly.'
+            ], 201);
+        }
         return back()->with('success', 'Your booking request has been submitted. We will contact you shortly.');
     }
 }

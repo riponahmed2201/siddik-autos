@@ -17,6 +17,9 @@
     <!-- Footer -->
     @include('web.partials.footer')
 
+    <!-- Toast Container -->
+    <div id="toast-root" class="fixed top-4 right-4 z-[100] space-y-3"></div>
+
     @include('web.partials.scripts')
 </body>
 
