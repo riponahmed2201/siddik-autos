@@ -22,13 +22,13 @@
 
             <!-- Booking Request Form -->
             <div class="bg-white rounded-2xl shadow-2xl p-6 md:p-8 max-w-4xl mx-auto transform translate-y-6">
-                @if(session('success'))
+                @if (session('success'))
                     <div class="mb-4 p-3 rounded bg-green-100 text-green-800">{{ session('success') }}</div>
                 @endif
-                @if($errors->any())
+                @if ($errors->any())
                     <div class="mb-4 p-3 rounded bg-red-100 text-red-800">
                         <ul class="list-disc ms-4">
-                            @foreach($errors->all() as $error)
+                            @foreach ($errors->all() as $error)
                                 <li>{{ $error }}</li>
                             @endforeach
                         </ul>
@@ -38,60 +38,78 @@
                     @csrf
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Your Name <span class="text-red-500">*</span></label>
-                            <input name="name" value="{{ old('name') }}" type="text" placeholder="Full name" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Your Name <span
+                                    class="text-red-500">*</span></label>
+                            <input name="name" value="{{ old('name') }}" type="text" placeholder="Full name"
+                                class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Phone Number <span class="text-red-500">*</span></label>
-                            <input name="phone" value="{{ old('phone') }}" type="text" placeholder="Enter mobile number" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Phone Number <span
+                                    class="text-red-500">*</span></label>
+                            <input name="phone" value="{{ old('phone') }}" type="text"
+                                placeholder="Enter mobile number"
+                                class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
-                            <input name="email" value="{{ old('email') }}" type="email" placeholder="Enter email" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                            <input name="email" value="{{ old('email') }}" type="email" placeholder="Enter email"
+                                class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
                         </div>
 
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Vehicle Type</label>
-                            <select name="vehicle_type_id" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                            <select name="vehicle_type_id"
+                                class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
                                 <option value="">Select Vehicle</option>
-                                @foreach(\App\Models\VehicleType::where('is_active', true)->get() as $vt)
-                                    <option value="{{ $vt->id }}" @selected(old('vehicle_type_id')==$vt->id)>{{ $vt->name }} ({{ $vt->capacity }})</option>
+                                @foreach (\App\Models\VehicleType::where('is_active', true)->get() as $vt)
+                                    <option value="{{ $vt->id }}" @selected(old('vehicle_type_id') == $vt->id)>{{ $vt->name }}
+                                        ({{ $vt->capacity }})</option>
                                 @endforeach
                             </select>
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Destination</label>
-                            <select name="destination_id" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                            <select name="destination_id"
+                                class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
                                 <option value="">Select Destination</option>
-                                @foreach(\App\Models\Destination::where('is_active', true)->get() as $dest)
-                                    <option value="{{ $dest->id }}" @selected(old('destination_id')==$dest->id)>{{ $dest->name }} {{ $dest->zone ? '(' . $dest->zone . ')' : '' }}</option>
+                                @foreach (\App\Models\Destination::where('is_active', true)->get() as $dest)
+                                    <option value="{{ $dest->id }}" @selected(old('destination_id') == $dest->id)>{{ $dest->name }}
+                                        {{ $dest->zone ? '(' . $dest->zone . ')' : '' }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">From Location <span class="text-red-500">*</span></label>
-                            <input name="from_location" value="{{ old('from_location', 'Dhaka Airport') }}" type="text" placeholder="Pickup location" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">From Location <span
+                                    class="text-red-500">*</span></label>
+                            <input name="from_location" value="{{ old('from_location', 'Dhaka Airport') }}" type="text"
+                                placeholder="Pickup location"
+                                class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
                         </div>
 
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Journey Date</label>
-                            <input name="journey_date" value="{{ old('journey_date') }}" type="date" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                            <input name="journey_date" value="{{ old('journey_date') }}" type="date"
+                                class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Journey Time</label>
-                            <input name="journey_time" value="{{ old('journey_time') }}" type="time" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                            <input name="journey_time" value="{{ old('journey_time') }}" type="time"
+                                class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Passengers</label>
-                            <input name="passengers" value="{{ old('passengers', 1) }}" type="number" min="1" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                            <input name="passengers" value="{{ old('passengers', 1) }}" type="number" min="1"
+                                class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
                         </div>
                         <div class="md:col-span-3">
                             <label class="block text-sm font-medium text-gray-700 mb-2">Message</label>
-                            <textarea name="message" rows="3" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-indigo-500 focus:border-transparent">{{ old('message') }}</textarea>
+                            <textarea name="message" rows="3"
+                                class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-indigo-500 focus:border-transparent">{{ old('message') }}</textarea>
                         </div>
                     </div>
                     <div class="mt-6 text-center">
-                        <button class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-3 rounded-lg font-medium hover:from-indigo-700 hover:to-purple-700 transition shadow-md">
+                        <button
+                            class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-3 rounded-lg font-medium hover:from-indigo-700 hover:to-purple-700 transition shadow-md">
                             Request Booking
                         </button>
                     </div>
@@ -117,7 +135,7 @@
                     class="filter-btn bg-indigo-600 text-white px-6 py-2 rounded-full font-medium transition">
                     All Vehicles
                 </button>
-                @foreach($categories as $category)
+                @foreach ($categories as $category)
                     <button onclick="filterCars('{{ $category->slug }}')" data-category="{{ $category->slug }}"
                         class="filter-btn bg-gray-100 text-gray-700 px-6 py-2 rounded-full font-medium hover:bg-gray-200 transition">
                         {{ $category->icon }} {{ $category->name }}
@@ -131,19 +149,21 @@
                     <div class="bg-white rounded-2xl shadow-md overflow-hidden group hover:shadow-xl transition duration-300 car-card"
                         data-category="{{ $vehicleType->category ? $vehicleType->category->slug : 'other' }}">
                         <div class="relative">
-                            @if($vehicleType->image_path)
+                            @if ($vehicleType->image_path)
                                 <img src="{{ asset('storage/' . $vehicleType->image_path) }}"
-                                     alt="{{ $vehicleType->name }}"
-                                     class="w-full h-48 object-cover group-hover:scale-105 transition duration-500">
+                                    alt="{{ $vehicleType->name }}"
+                                    class="w-full h-48 object-cover group-hover:scale-105 transition duration-500">
                             @else
-                                <div class="w-full h-48 bg-gradient-to-br from-indigo-100 to-purple-100 flex items-center justify-center">
+                                <div
+                                    class="w-full h-48 bg-gradient-to-br from-indigo-100 to-purple-100 flex items-center justify-center">
                                     <div class="text-center">
                                         <div class="text-4xl text-indigo-400 mb-2">🚗</div>
                                         <div class="text-indigo-600 font-medium">{{ $vehicleType->name }}</div>
                                     </div>
                                 </div>
                             @endif
-                            <div class="absolute top-4 right-4 bg-indigo-600 text-white text-sm font-medium px-3 py-1 rounded-full">
+                            <div
+                                class="absolute top-4 right-4 bg-indigo-600 text-white text-sm font-medium px-3 py-1 rounded-full">
                                 Available Now
                             </div>
                         </div>
@@ -156,8 +176,8 @@
                                     <span class="text-indigo-600 mr-2">👥</span>
                                     {{ $vehicleType->capacity }} Seats
                                 </div>
-                                @if($vehicleType->features->count() > 0)
-                                    @foreach($vehicleType->features->take(3) as $feature)
+                                @if ($vehicleType->features->count() > 0)
+                                    @foreach ($vehicleType->features->take(3) as $feature)
                                         <div class="flex items-center text-gray-600">
                                             <span class="text-indigo-600 mr-2">{{ $feature->icon }}</span>
                                             {{ $feature->name }}
@@ -174,12 +194,12 @@
                                     </div>
                                 @endif
                             </div>
-                            @if($vehicleType->description)
+                            @if ($vehicleType->description)
                                 <p class="text-gray-600 text-sm mb-4">{{ Str::limit($vehicleType->description, 80) }}</p>
                             @endif
                             <a href="#fleet"
-                               onclick="document.querySelector('select[name=\"vehicle_type_id\"]').value = '{{ $vehicleType->id }}'; document.querySelector('select[name=\"vehicle_type_id\"]').scrollIntoView({behavior: 'smooth'});"
-                               class="block w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-center px-4 py-3 rounded-lg font-medium hover:from-indigo-700 hover:to-purple-700 transition">
+                                onclick="document.querySelector('select[name=\"vehicle_type_id\"]').value = '{{ $vehicleType->id }}'; document.querySelector('select[name=\"vehicle_type_id\"]').scrollIntoView({behavior: 'smooth'});"
+                                class="block w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-center px-4 py-3 rounded-lg font-medium hover:from-indigo-700 hover:to-purple-700 transition">
                                 Book Now
                             </a>
                         </div>
@@ -288,10 +308,10 @@
                 @forelse($testimonials as $testimonial)
                     <div class="bg-white rounded-2xl p-8 shadow-lg">
                         <div class="flex items-center mb-6">
-                            @if($testimonial->customer_image)
+                            @if ($testimonial->customer_image)
                                 <img src="{{ asset('storage/' . $testimonial->customer_image) }}"
-                                     alt="{{ $testimonial->customer_name }}"
-                                     class="w-12 h-12 rounded-full object-cover mr-4">
+                                    alt="{{ $testimonial->customer_name }}"
+                                    class="w-12 h-12 rounded-full object-cover mr-4">
                             @else
                                 <div class="w-12 h-12 bg-indigo-100 rounded-full flex items-center justify-center mr-4">
                                     <i class="bi bi-person text-indigo-600"></i>
@@ -299,22 +319,22 @@
                             @endif
                             <div>
                                 <h3 class="text-lg font-bold text-gray-900">{{ $testimonial->customer_name }}</h3>
-                                @if($testimonial->customer_position || $testimonial->customer_company)
+                                @if ($testimonial->customer_position || $testimonial->customer_company)
                                     <p class="text-sm text-gray-500">
-                                        @if($testimonial->customer_position)
+                                        @if ($testimonial->customer_position)
                                             {{ $testimonial->customer_position }}
                                         @endif
-                                        @if($testimonial->customer_position && $testimonial->customer_company)
+                                        @if ($testimonial->customer_position && $testimonial->customer_company)
                                             at
                                         @endif
-                                        @if($testimonial->customer_company)
+                                        @if ($testimonial->customer_company)
                                             {{ $testimonial->customer_company }}
                                         @endif
                                     </p>
                                 @endif
                                 <div class="flex text-yellow-400">
-                                    @for($i = 1; $i <= 5; $i++)
-                                        @if($i <= $testimonial->rating)
+                                    @for ($i = 1; $i <= 5; $i++)
+                                        @if ($i <= $testimonial->rating)
                                             ★
                                         @else
                                             ☆
@@ -337,80 +357,6 @@
         </div>
     </section>
 
-    <!-- Locations Section -->
-    <section id="locations" class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold text-gray-900 mb-4">Our Locations</h2>
-                <p class="text-gray-600 max-w-2xl mx-auto">
-                    Find us at convenient locations across major cities.
-                </p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <!-- Location 1 -->
-                <div class="bg-gray-50 rounded-2xl p-6">
-                    <div class="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center mb-6">
-                        <span class="text-2xl text-indigo-600">📍</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-4">New York City</h3>
-                    <p class="text-gray-600 mb-4">
-                        123 Fifth Avenue<br>
-                        New York, NY 10001
-                    </p>
-                    <a href="#" class="text-indigo-600 font-medium hover:text-indigo-700">
-                        Get Directions →
-                    </a>
-                </div>
-
-                <!-- Location 2 -->
-                <div class="bg-gray-50 rounded-2xl p-6">
-                    <div class="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center mb-6">
-                        <span class="text-2xl text-indigo-600">📍</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-4">Los Angeles</h3>
-                    <p class="text-gray-600 mb-4">
-                        456 Sunset Boulevard<br>
-                        Los Angeles, CA 90028
-                    </p>
-                    <a href="#" class="text-indigo-600 font-medium hover:text-indigo-700">
-                        Get Directions →
-                    </a>
-                </div>
-
-                <!-- Location 3 -->
-                <div class="bg-gray-50 rounded-2xl p-6">
-                    <div class="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center mb-6">
-                        <span class="text-2xl text-indigo-600">📍</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-4">Chicago</h3>
-                    <p class="text-gray-600 mb-4">
-                        789 Michigan Avenue<br>
-                        Chicago, IL 60601
-                    </p>
-                    <a href="#" class="text-indigo-600 font-medium hover:text-indigo-700">
-                        Get Directions →
-                    </a>
-                </div>
-
-                <!-- Location 4 -->
-                <div class="bg-gray-50 rounded-2xl p-6">
-                    <div class="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center mb-6">
-                        <span class="text-2xl text-indigo-600">📍</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-4">Miami</h3>
-                    <p class="text-gray-600 mb-4">
-                        321 Ocean Drive<br>
-                        Miami, FL 33139
-                    </p>
-                    <a href="#" class="text-indigo-600 font-medium hover:text-indigo-700">
-                        Get Directions →
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Latest Blog Posts -->
     <section class="py-20 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -425,21 +371,24 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 @forelse($latest as $post)
                     <article class="bg-white rounded-3xl shadow overflow-hidden group">
-                        @if($post->thumbnail_path)
+                        @if ($post->thumbnail_path)
                             <div class="relative overflow-hidden">
-                                <img src="{{ asset('storage/'.$post->thumbnail_path) }}" alt="{{ $post->title }}"
-                                     class="w-full h-48 object-cover transform group-hover:scale-110 transition duration-500">
+                                <img src="{{ asset('storage/' . $post->thumbnail_path) }}" alt="{{ $post->title }}"
+                                    class="w-full h-48 object-cover transform group-hover:scale-110 transition duration-500">
                             </div>
                         @endif
                         <div class="p-6">
-                            <div class="text-sm text-gray-500 mb-2">{{ optional($post->published_at)->format('M d, Y') }}</div>
+                            <div class="text-sm text-gray-500 mb-2">{{ optional($post->published_at)->format('M d, Y') }}
+                            </div>
                             <h3 class="text-xl font-bold text-gray-900 mb-3">
-                                <a href="{{ url('blog/details/'.$post->slug) }}" class="hover:text-indigo-600 transition">{{ $post->title }}</a>
+                                <a href="{{ url('blog/details/' . $post->slug) }}"
+                                    class="hover:text-indigo-600 transition">{{ $post->title }}</a>
                             </h3>
-                            @if($post->excerpt)
+                            @if ($post->excerpt)
                                 <p class="text-gray-600 mb-4">{{ $post->excerpt }}</p>
                             @endif
-                            <a href="{{ url('blog/details/'.$post->slug) }}" class="text-indigo-600 font-medium hover:text-indigo-700">Read More →</a>
+                            <a href="{{ url('blog/details/' . $post->slug) }}"
+                                class="text-indigo-600 font-medium hover:text-indigo-700">Read More →</a>
                         </div>
                     </article>
                 @empty
@@ -447,34 +396,36 @@
                 @endforelse
             </div>
             <div class="mt-10 text-center">
-                <a href="{{ url('blog') }}" class="inline-block px-6 py-3 rounded-lg bg-indigo-600 text-white font-medium hover:bg-indigo-700 transition">View All Posts</a>
+                <a href="{{ url('blog') }}"
+                    class="inline-block px-6 py-3 rounded-lg bg-indigo-600 text-white font-medium hover:bg-indigo-700 transition">View
+                    All Posts</a>
             </div>
         </div>
     </section>
 @endsection
 
 @section('scripts')
-<script>
-    function filterCars(category) {
-        // Remove active class from all buttons
-        document.querySelectorAll('.filter-btn').forEach(btn => {
-            btn.classList.remove('bg-indigo-600', 'text-white');
-            btn.classList.add('bg-gray-100', 'text-gray-700');
-        });
+    <script>
+        function filterCars(category) {
+            // Remove active class from all buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('bg-indigo-600', 'text-white');
+                btn.classList.add('bg-gray-100', 'text-gray-700');
+            });
 
-        // Add active class to clicked button
-        event.target.classList.remove('bg-gray-100', 'text-gray-700');
-        event.target.classList.add('bg-indigo-600', 'text-white');
+            // Add active class to clicked button
+            event.target.classList.remove('bg-gray-100', 'text-gray-700');
+            event.target.classList.add('bg-indigo-600', 'text-white');
 
-        // Show/hide car cards based on category
-        const carCards = document.querySelectorAll('.car-card');
-        carCards.forEach(card => {
-            if (category === 'all' || card.dataset.category === category) {
-                card.style.display = 'block';
-            } else {
-                card.style.display = 'none';
-            }
-        });
-    }
-</script>
+            // Show/hide car cards based on category
+            const carCards = document.querySelectorAll('.car-card');
+            carCards.forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+    </script>
 @endsection
