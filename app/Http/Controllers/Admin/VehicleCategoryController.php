@@ -52,7 +52,8 @@ class VehicleCategoryController extends Controller
      */
     public function show(VehicleCategory $vehicleCategory)
     {
-        return view('admin.vehicle-categories.show', compact('vehicleCategory'));
+        $category = $vehicleCategory;
+        return view('admin.vehicle-categories.show', compact('category'));
     }
 
     /**
@@ -60,7 +61,8 @@ class VehicleCategoryController extends Controller
      */
     public function edit(VehicleCategory $vehicleCategory)
     {
-        return view('admin.vehicle-categories.edit', compact('vehicleCategory'));
+        $category = $vehicleCategory;
+        return view('admin.vehicle-categories.edit', compact('category'));
     }
 
     /**

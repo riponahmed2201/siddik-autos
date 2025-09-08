@@ -24,43 +24,44 @@
                 <!-- Contact Form -->
                 <div class="bg-white rounded-2xl shadow-xl p-8">
                     <h2 class="text-2xl font-bold text-gray-900 mb-6">Send Us a Message</h2>
-                    <form>
+                    <form id="contactForm" action="{{ route('contact.submit') }}" method="POST">
+                        @csrf
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-2">First Name</label>
-                                <input type="text"
+                                <input type="text" name="first_name" required placeholder="John"
                                     class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
                             </div>
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
-                                <input type="text"
+                                <input type="text" name="last_name" placeholder="Doe"
                                     class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
                             </div>
                         </div>
                         <div class="mb-6">
                             <label class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
-                            <input type="email"
+                            <input type="email" name="email" required placeholder="name@example.com"
                                 class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
                         </div>
                         <div class="mb-6">
                             <label class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
-                            <input type="tel"
+                            <input type="tel" name="phone" placeholder="+8801XXXXXXXXX"
                                 class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
                         </div>
                         <div class="mb-6">
                             <label class="block text-sm font-medium text-gray-700 mb-2">Subject</label>
-                            <select
+                            <select name="subject" required
                                 class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
-                                <option>General Inquiry</option>
-                                <option>Booking Question</option>
-                                <option>Support</option>
-                                <option>Feedback</option>
-                                <option>Other</option>
+                                <option value="General Inquiry">General Inquiry</option>
+                                <option value="Booking Question">Booking Question</option>
+                                <option value="Support">Support</option>
+                                <option value="Feedback">Feedback</option>
+                                <option value="Other">Other</option>
                             </select>
                         </div>
                         <div class="mb-6">
                             <label class="block text-sm font-medium text-gray-700 mb-2">Message</label>
-                            <textarea rows="5"
+                            <textarea name="message" rows="5" required placeholder="Write your message..."
                                 class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-indigo-500 focus:border-transparent"></textarea>
                         </div>
                         <button type="submit"
@@ -171,61 +172,79 @@
             <div class="max-w-3xl mx-auto space-y-6">
                 <!-- FAQ Item 1 -->
                 <div class="faq-item bg-white rounded-xl shadow-md overflow-hidden ">
-                    <button class="w-full px-6 py-4 text-left flex justify-between items-center bg-gray-50"
-                        onclick="toggleFAQ(this)">
-                        <span class="text-lg font-semibold">What documents do I need to rent a car?</span>
-                        <svg class="w-6 h-6 transform transition-transform duration-200" fill="none"
-                            stroke="currentColor" viewBox="0 0 24 24">
+                    <button class="w-full px-6 py-4 text-left flex justify-between items-center bg-gray-50" onclick="toggleFAQ(this)">
+                        <span class="text-lg font-semibold">What documents do I need to book?</span>
+                        <svg class="w-6 h-6 transform transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                         </svg>
                     </button>
                     <div class="faq-answer hidden px-6 pb-4 text-gray-600 bg-gray-50">
-                        You'll need a valid driver's license, credit card, and proof of insurance. International customers
-                        may need additional documentation.
+                        A valid phone number is required for confirmation. For chauffeur-driven rides, a government ID may be requested at pickup.
                     </div>
                 </div>
 
                 <!-- FAQ Item 2 -->
                 <div class="faq-item bg-white rounded-xl shadow-md overflow-hidden">
-                    <button class="w-full px-6 py-4 text-left flex justify-between items-center bg-gray-50"
-                        onclick="toggleFAQ(this)">
-                        <span class="text-lg font-semibold">What is your cancellation policy?</span>
-                        <svg class="w-6 h-6 transform transition-transform duration-200" fill="none"
-                            stroke="currentColor" viewBox="0 0 24 24">
+                    <button class="w-full px-6 py-4 text-left flex justify-between items-center bg-gray-50" onclick="toggleFAQ(this)">
+                        <span class="text-lg font-semibold">Which payment methods do you accept?</span>
+                        <svg class="w-6 h-6 transform transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                         </svg>
                     </button>
                     <div class="faq-answer hidden px-6 pb-4 text-gray-600 bg-gray-50">
-                        Free cancellation up to 24 hours before your rental start time. Late cancellations may incur a fee.
+                        We accept cash, bank transfer, and popular mobile wallets. Corporate clients can request monthly invoicing.
                     </div>
                 </div>
 
                 <!-- FAQ Item 3 -->
                 <div class="faq-item bg-white rounded-xl shadow-md overflow-hidden">
-                    <button class="w-full px-6 py-4 text-left flex justify-between items-center bg-gray-50"
-                        onclick="toggleFAQ(this)">
-                        <span class="text-lg font-semibold">Is insurance included?</span>
-                        <svg class="w-6 h-6 transform transition-transform duration-200" fill="none"
-                            stroke="currentColor" viewBox="0 0 24 24">
+                    <button class="w-full px-6 py-4 text-left flex justify-between items-center bg-gray-50" onclick="toggleFAQ(this)">
+                        <span class="text-lg font-semibold">Is fuel, parking, or toll included?</span>
+                        <svg class="w-6 h-6 transform transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                         </svg>
                     </button>
                     <div class="faq-answer hidden px-6 pb-4 text-gray-600 bg-gray-50">
-                        Basic insurance is included. Additional coverage options are available for enhanced protection.
+                        Base prices cover the vehicle and driver. Fuel, parking fees, and tolls are charged as per actuals unless specified in a package.
                     </div>
                 </div>
+
                 <!-- FAQ Item 4 -->
                 <div class="faq-item bg-white rounded-xl shadow-md overflow-hidden">
-                    <button class="w-full px-6 py-4 text-left flex justify-between items-center bg-gray-50"
-                        onclick="toggleFAQ(this)">
-                        <span class="text-lg font-semibold">Is toll tax included in price?</span>
-                        <svg class="w-6 h-6 transform transition-transform duration-200" fill="none"
-                            stroke="currentColor" viewBox="0 0 24 24">
+                    <button class="w-full px-6 py-4 text-left flex justify-between items-center bg-gray-50" onclick="toggleFAQ(this)">
+                        <span class="text-lg font-semibold">Can I cancel or reschedule?</span>
+                        <svg class="w-6 h-6 transform transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                         </svg>
                     </button>
                     <div class="faq-answer hidden px-6 pb-4 text-gray-600 bg-gray-50">
-                        Free cancellation up to 24 hours before your rental start time. Late cancellations may incur a fee.
+                        Free cancellation up to 24 hours before pickup. Within 24 hours, a small fee may apply to cover scheduling costs.
+                    </div>
+                </div>
+
+                <!-- FAQ Item 5 -->
+                <div class="faq-item bg-white rounded-xl shadow-md overflow-hidden">
+                    <button class="w-full px-6 py-4 text-left flex justify-between items-center bg-gray-50" onclick="toggleFAQ(this)">
+                        <span class="text-lg font-semibold">Do you provide baby seats and extra luggage space?</span>
+                        <svg class="w-6 h-6 transform transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+                    <div class="faq-answer hidden px-6 pb-4 text-gray-600 bg-gray-50">
+                        Yes. Request child seats or a larger boot space during booking. Additional charges may apply based on availability.
+                    </div>
+                </div>
+
+                <!-- FAQ Item 6 -->
+                <div class="faq-item bg-white rounded-xl shadow-md overflow-hidden">
+                    <button class="w-full px-6 py-4 text-left flex justify-between items-center bg-gray-50" onclick="toggleFAQ(this)">
+                        <span class="text-lg font-semibold">How is waiting time handled for airport pickups?</span>
+                        <svg class="w-6 h-6 transform transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+                    <div class="faq-answer hidden px-6 pb-4 text-gray-600 bg-gray-50">
+                        We include a complimentary 30-minute grace period after the scheduled time. Beyond that, standard waiting charges apply.
                     </div>
                 </div>
             </div>
@@ -240,11 +259,11 @@
                 Join thousands of satisfied customers who choose MyCarRental for their premium car rental needs.
             </p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="car-listing.html"
+                <a href="/#fleet"
                     class="bg-white text-indigo-600 px-8 py-3 rounded-full font-medium hover:bg-gray-100 transition">
                     Browse Our Fleet
                 </a>
-                <a href="contact.html"
+                <a href="/contact-us"
                     class="bg-transparent text-white border-2 border-white px-8 py-3 rounded-full font-medium hover:bg-white/10 transition">
                     Contact Us
                 </a>
@@ -252,3 +271,44 @@
         </div>
     </section>
 @endsection
+
+@push('scripts')
+    <script>
+        // Lightweight toast for contact page
+        function contactToast(msg) {
+            const root = document.getElementById('toast-root');
+            if (!root) return alert(msg);
+            const el = document.createElement('div');
+            el.className = 'bg-green-600 text-white px-4 py-3 rounded-lg shadow-lg min-w-[260px]';
+            el.textContent = msg;
+            root.appendChild(el);
+            setTimeout(() => { el.remove(); }, 2500);
+        }
+
+        document.getElementById('contactForm')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const form = this;
+            const url = form.getAttribute('action');
+            const formData = new FormData(form);
+            fetch(url, {
+                method: 'POST',
+                headers: { 'Accept': 'application/json' },
+                body: formData
+            }).then(async res => {
+                const data = await res.json().catch(() => ({}));
+                if (res.ok) {
+                    form.reset();
+                    contactToast(data.message || 'Thanks! Your message has been sent.');
+                } else {
+                    let msg = 'Submission failed.';
+                    if (data.errors) {
+                        msg = Object.values(data.errors).flat().join(' ');
+                    } else if (data.message) {
+                        msg = data.message;
+                    }
+                    alert(msg);
+                }
+            }).catch(() => alert('Network error. Please try again.'));
+        });
+    </script>
+@endpush

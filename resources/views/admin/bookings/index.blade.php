@@ -26,7 +26,13 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Recent Booking Requests</h5>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5 class="card-title mb-0">Recent Booking Requests</h5>
+                                <a href="{{ route('admin.bookings.create') }}" class="btn btn-primary">
+                                    <i class="bi bi-plus-lg"></i> Create Booking
+                                </a>
+                            </div>
+                            <hr>
 
                             <div class="table-responsive">
                                 <table class="table table-striped align-middle">

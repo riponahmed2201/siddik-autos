@@ -100,65 +100,6 @@
         </div>
     </section>
 
-    <!-- Team Section -->
-    <section class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl font-bold text-gray-900 mb-4">Meet Our Leadership Team</h2>
-                <p class="text-gray-600 max-w-2xl mx-auto">
-                    The experienced professionals behind MyCarRental's success.
-                </p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="text-center">
-                    <div class="relative mb-6 inline-block">
-                        <div
-                            class="w-48 h-48 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full absolute top-2 left-2">
-                        </div>
-                        <img src="assets/web/imgs/profile4.webp" alt="CEO"
-                            class="w-48 h-48 object-cover rounded-full relative z-10">
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-2">Michael Anderson</h3>
-                    <p class="text-indigo-600 mb-4">Chief Executive Officer</p>
-                    <p class="text-gray-600">
-                        With over 20 years of experience in the automotive industry.
-                    </p>
-                </div>
-
-                <div class="text-center">
-                    <div class="relative mb-6 inline-block">
-                        <div
-                            class="w-48 h-48 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full absolute top-2 left-2">
-                        </div>
-                        <img src="assets/web/imgs/profile5.webp" alt="COO"
-                            class="w-48 h-48 object-cover rounded-full relative z-10">
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-2">Sarah Johnson</h3>
-                    <p class="text-indigo-600 mb-4">Chief Operations Officer</p>
-                    <p class="text-gray-600">
-                        Leading our operations with innovation and excellence.
-                    </p>
-                </div>
-
-                <div class="text-center">
-                    <div class="relative mb-6 inline-block">
-                        <div
-                            class="w-48 h-48 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full absolute top-2 left-2">
-                        </div>
-                        <img src="assets/web/imgs/profile3.jpeg" alt="CTO"
-                            class="w-48 h-48 object-cover rounded-full relative z-10">
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-2">David Chen</h3>
-                    <p class="text-indigo-600 mb-4">Chief Technology Officer</p>
-                    <p class="text-gray-600">
-                        Driving digital innovation in our services.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Call to Action -->
     <section class="py-20 bg-gradient-to-r from-indigo-900 to-purple-900">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -171,7 +112,7 @@
                     class="bg-white text-indigo-600 px-8 py-3 rounded-full font-medium hover:bg-gray-100 transition">
                     Browse Our Fleet
                 </a>
-                <a href="contact.html"
+                <a href="/contact-us"
                     class="bg-transparent text-white border-2 border-white px-8 py-3 rounded-full font-medium hover:bg-white/10 transition">
                     Contact Us
                 </a>

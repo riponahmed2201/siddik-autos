@@ -23,77 +23,11 @@
                   <!-- Regular Menu Items -->
                   <a href="/about-us" class="text-gray-700 hover:text-indigo-600 font-medium transition">About Us</a>
 
-                  <div class="relative group">
-                      <button
-                          class="text-gray-700 hover:text-indigo-600 font-medium transition flex items-center space-x-1">
-                          <span>Services</span>
-                          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                  d="M19 9l-7 7-7-7" />
-                          </svg>
-                      </button>
-
-                      <!-- Dropdown Menu -->
-                      <div
-                          class="absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5
-                                opacity-0 invisible group-hover:opacity-100 group-hover:visible group-hover:z-[9]
-                                transition-all duration-200">
-                          <div class="py-1">
-                              <a href="car-details.html"
-                                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-600">Car
-                                  Detail 1</a>
-                              <a href="car-details-v2.html"
-                                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-600">Car
-                                  Detail 2</a>
-                              <a href="car-details-v3.html"
-                                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-600">Car
-                                  Detail 3</a>
-                              <a href="booking-cart.html"
-                                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-600">Booking
-                                  Cart</a>
-
-                          </div>
-                      </div>
-                  </div>
+                  <a href="/services" class="text-gray-700 hover:text-indigo-600 font-medium transition">Services</a>
 
                   <a href="/pricing" class="text-gray-700 hover:text-indigo-600 font-medium transition">Pricing</a>
 
-                  <div class="relative group">
-                      <button
-                          class="text-gray-700 hover:text-indigo-600 font-medium transition flex items-center space-x-1">
-                          <span>Cars</span>
-                          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                  d="M19 9l-7 7-7-7" />
-                          </svg>
-                      </button>
-
-                      <!-- Dropdown Menu -->
-                      <div
-                          class="absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5
-                                opacity-0 invisible group-hover:opacity-100 group-hover:visible group-hover:z-[9]
-                                transition-all duration-200">
-                          <div class="py-1">
-                              <a href="dashboard.html"
-                                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-600">Dashboard</a>
-                              <a href="profile-settings.html"
-                                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-600">Profile
-                                  Settings</a>
-                              <a href="blog-list.html"
-                                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-600">Blog
-                                  List</a>
-                              <a href="blog-detail.html"
-                                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-600">Blog
-                                  Detail</a>
-                              <a href="blog-detail-sidebar.html"
-                                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-600">Blog
-                                  Detail With Sidebar</a>
-                              <a href="404.html"
-                                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-600">404
-                                  Page</a>
-                          </div>
-                      </div>
-                  </div>
+                  <a href="/#fleet" class="text-gray-700 hover:text-indigo-600 font-medium transition">Cars</a>
 
                   <a href="/blog" class="text-gray-700 hover:text-indigo-600 font-medium transition">Blog</a>
                   <a href="/contact-us" class="text-gray-700 hover:text-indigo-600 font-medium transition">Contact

@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\Admin\VehicleCategoryController;
 use App\Http\Controllers\Admin\VehicleFeatureController;
+use App\Http\Controllers\Admin\ContactInquiryController;
 use Illuminate\Support\Facades\Route;
 
 //Login
@@ -39,8 +40,9 @@ Route::middleware('admin')->group(function () {
     Route::resource('vehicle-features', VehicleFeatureController::class);
     Route::resource('destinations', DestinationController::class);
     Route::resource('pricing', PricingController::class);
-    Route::resource('bookings', AdminBookingController::class)->only(['index','show','edit','update','destroy']);
+    Route::resource('bookings', AdminBookingController::class)->only(['index','show','create','store','edit','update','destroy']);
     Route::resource('blogs', BlogController::class);
+    Route::resource('contact-inquiries', ContactInquiryController::class)->only(['index','show']);
     Route::resource('testimonials', TestimonialController::class);
 
     // Route::resource('services', ServiceController::class);

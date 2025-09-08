@@ -44,4 +44,9 @@ class HomeController extends Controller
     {
         return view('web.pages.pricing');
     }
+
+    public function showServices()
+    {
+        return view('web.pages.services');
+    }
 }

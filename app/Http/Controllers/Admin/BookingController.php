@@ -15,6 +15,13 @@ class BookingController extends Controller
         return view('admin.bookings.index', compact('bookings'));
     }
 
+    public function create()
+    {
+        $vehicleTypes = \App\Models\VehicleType::where('is_active', true)->get();
+        $destinations = \App\Models\Destination::where('is_active', true)->get();
+        return view('admin.bookings.create', compact('vehicleTypes','destinations'));
+    }
+
     public function show(BookingRequest $booking)
     {
         $booking->load(['vehicleType','destination']);
@@ -48,6 +55,26 @@ class BookingController extends Controller
         $booking->update($validated);
 
         return redirect()->route('admin.bookings.show', $booking)->with('success', 'Booking updated successfully.');
+    }
+
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'nullable|email|max:255',
+            'phone' => 'required|string|max:50',
+            'from_location' => 'required|string|max:255',
+            'destination_id' => 'nullable|exists:destinations,id',
+            'vehicle_type_id' => 'nullable|exists:vehicle_types,id',
+            'journey_date' => 'nullable|date',
+            'journey_time' => 'nullable',
+            'passengers' => 'nullable|integer|min:1',
+            'message' => 'nullable|string',
+        ]);
+
+        $booking = BookingRequest::create($validated + ['status' => 'pending']);
+
+        return redirect()->route('admin.bookings.show', $booking)->with('success', 'Booking created successfully.');
     }
 
     public function destroy(BookingRequest $booking)
