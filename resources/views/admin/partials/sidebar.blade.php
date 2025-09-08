@@ -55,5 +55,10 @@
                 <i class="bi bi-calendar-check"></i><span>Booking Requests</span>
             </a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{{ route('admin.contact-inquiries.index') }}">
+                <i class="bi bi-envelope"></i><span>Contact Inquiries</span>
+            </a>
+        </li>
     </ul>
 </aside>
